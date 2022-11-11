@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 public class ServerS {
     private String db;
-    private String ss;
     private String sp;
     private String dd;
     private String lg;
@@ -16,7 +15,6 @@ public class ServerS {
 
     public ServerS(){
         this.db = "";
-        this.ss = "";
         this.sp = "";
         this.dd = "";
         this.lg = "";
@@ -29,10 +27,6 @@ public class ServerS {
         this.db=s;
     }
 
-    public void setss(String s){
-        System.out.println(s);
-        this.ss=s;
-    }
     public void setsp(String s){
         System.out.println(s);
         this.ss=s;
@@ -67,7 +61,6 @@ public class ServerS {
                 String data = myReader.nextLine();
                 String[] linha = data.split(" ");
                 if(Objects.equals(linha[1], "DB")) {setdb(linha[2]);}
-                else if(Objects.equals(linha[1], "SS")) {setss(linha[2]);}
                 else if(Objects.equals(linha[1], "SP")) {setsp(linha[2]);}
                 else if(Objects.equals(linha[1], "DD")) {setdd(linha[2]);}
                 else if(Objects.equals(linha[0], "all") && Objects.equals(linha[1], "LG")) {setlg(linha[2]);}
