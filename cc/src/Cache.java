@@ -26,7 +26,7 @@ public class Cache {
     private HashMap<String,String> names;
 
     public Cache(){
-        HashMap<String, String> doubs  = new HashMap<String, String>();
+        //HashMap<String, String> doubs  = new HashMap<String, String>();
         ArrayList<String> gfg = new ArrayList<String>();
         this.dfault = "";
         this.ttl = "";
@@ -37,14 +37,18 @@ public class Cache {
         this.soaexpire = "";
         this.ns = gfg;
         this.smaller = "";
+        HashMap<String, String> doubs  = new HashMap<String, String>();
         this.mx = doubs;
         //this.mx = new ArrayList<String>();
         //this.mxprio = gfg;
-        this.ips = doubs;
+        HashMap<String, String> doubs1  = new HashMap<String, String>();
+        this.ips = doubs1;
         //this.www = gfg;
         //this.wwwprio = gfg;
-        this.www = doubs;
-        this.names = doubs;
+        HashMap<String, String> doubs2  = new HashMap<String, String>();
+        this.www = doubs2;
+        HashMap<String, String> doubs3  = new HashMap<String, String>();
+        this.names = doubs3;
 
     }
 
@@ -120,13 +124,28 @@ public class Cache {
 */
     public  void addwww(String ip,String prio){
         System.out.println("www " + ip +" " +prio);
-        this.mx.put(ip,prio);
+        this.www.put(ip,prio);
     }
     public void addnamesmap(String tipo,String nome){
         System.out.println("nome " + tipo + " "+ nome);
         this.names.put(tipo,nome);
     }
 
+    public List<String> getNS() {
+        return ns;
+    }
+    public HashMap<String, String> getMx() {
+        return mx;
+    }
+    public HashMap<String,String> getNames(){
+        return names;
+    }
+    public String getTtl(){
+        return ttl;
+    }
+    public HashMap<String,String> getIps(){
+        return ips;
+    }
     public void ParserCache(){
         try {
             File ficheiro = new File("testbd.txt");
@@ -143,12 +162,14 @@ public class Cache {
                     else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "SOAREFRESH")) {setsoarefresh(linha[2]);}
                     else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "SOARETRY")) {setsoaretry(linha[2]);}
                     else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "SOAEXPIRE")) {setsoaexpire(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "NS")) {addnslist(linha[2]);}
+                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "NS")) {
+                        String aux = linha[1]+" "+linha[2];
+                        addnslist(aux);
+                    }
                     else if(Objects.equals(linha[0], "Smaller.@")) {setsmaller(linha[2]);}
                     else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "MX")) {
-                        //addmxlist(linha[2]);
-                        //addmxpriolist(linha[4]);
-                        addmx(linha[2],linha[4]);
+                        String aux = linha[1]+" "+linha[2];
+                        addmx(aux,linha[4]);
                     }
                     else if(Objects.equals(linha[1], "A") && !Objects.equals(linha[0], "www")) {addipsmap(linha[0],linha[2]);}
                     else if(Objects.equals(linha[1], "A") && Objects.equals(linha[0], "www")) {

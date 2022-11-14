@@ -1,7 +1,9 @@
-import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.*;
 
+import static java.lang.Thread.sleep;
 
 
 public class ServerP {
@@ -72,5 +74,36 @@ public class ServerP {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+    public static void main(String[] args) throws IOException, InterruptedException {
+        ServerSocket ss = new ServerSocket(4998);
+        Socket s = ss.accept();
+        System.out.println("cliente conectado ao server primario");
+
+        InputStreamReader in = new InputStreamReader(s.getInputStream());
+        BufferedReader bf = new BufferedReader(in);
+
+        String str = bf.readLine();
+        System.out.println("cliente: "+ str);
+
+
+
+
+        Query q = new Query();
+        List<String> querydone = q.doquery(str);
+
+        for (String value : querydone) {
+            System.out.println("ls" + value);
+            PrintWriter pr = new PrintWriter(s.getOutputStream());
+            pr.println(value);
+            pr.flush();
+            sleep(1);
+        }
+        /*
+        PrintWriter pr = new PrintWriter(s.getOutputStream());
+        pr.println("yes!!" + querydone.get(1));
+        pr.flush();
+*/
+
     }
 }
