@@ -98,12 +98,13 @@ public class Cache {
         this.mxprio.add(s);
     }
 */
+
     public  void addmx(String mx,String prio){
-        System.out.println(mx+" " +prio);
+        System.out.println("mx " + mx+" " +prio);
         this.mx.put(mx,prio);
     }
     public void addipsmap(String tipo,String ip){
-        System.out.println(tipo +" " + ip);
+        System.out.println("ips " +tipo +" " + ip);
         this.ips.put(tipo,ip);
     }
 /*
@@ -117,8 +118,12 @@ public class Cache {
         this.wwwprio.add(s);
     }
 */
+    public  void addwww(String ip,String prio){
+        System.out.println("www " + ip +" " +prio);
+        this.mx.put(ip,prio);
+    }
     public void addnamesmap(String tipo,String nome){
-        System.out.println(nome);
+        System.out.println("nome " + tipo + " "+ nome);
         this.names.put(tipo,nome);
     }
 
@@ -149,7 +154,7 @@ public class Cache {
                     else if(Objects.equals(linha[1], "A") && Objects.equals(linha[0], "www")) {
                         //addwwwlist(linha[2]);
                         //addwwwpriolist(linha[4]);
-                        addipsmap(linha[2],linha[4]);
+                        addwww(linha[2],linha[4]);
                     }
                     else if(Objects.equals(linha[1], "CNAME")) {addnamesmap(linha[0],linha[2]);}
                 }
