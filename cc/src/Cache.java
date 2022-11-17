@@ -1,6 +1,4 @@
-
-import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.File;
 import java.util.*;
 
 public class Cache {
@@ -13,12 +11,12 @@ public class Cache {
     private String soarefresh;
     private String soaretry;
     private String soaexpire;
-    private List<String> ns;
-    private String smaller;
-    private HashMap<String,String> mx;
-    private HashMap<String,String> ips;
-    private HashMap<String,String> www;
-    private HashMap<String,String> names;
+    private HashMap<String,String> allva;
+     private HashMap<String,String> ns;
+     private HashMap<String,String> mx;
+     private HashMap<String,String> Aips;
+    private HashMap<String,String> cnames;
+
 
     public Cache(){
         this.dfault = "";
@@ -28,12 +26,11 @@ public class Cache {
         this.soaserial = "";
         this.soarefresh = "";
         this.soaexpire = "";
-        this.ns = new ArrayList<>();
-        this.smaller = "";
+        this.allva = new HashMap<>();
+        this.ns = new HashMap<>();
         this.mx = new HashMap<>();
-        this.ips = new HashMap<>();
-        this.www = new HashMap<>();;
-        this.names = new HashMap<>();;
+        this.Aips = new HashMap<>();
+        this.cnames = new HashMap<>();
     }
 
     public void setdfault(String s){
@@ -60,39 +57,34 @@ public class Cache {
     public void setsoaexpire(String s){
         this.soasp = s;
     }
-    public void addnslist(String s){
-        this.ns.add(s);
+    public void addAllva(String key,String value){
+        System.out.println("allva-v-"+value+" k-"+key);
+        this.allva.put(value,key);
     }
-    public void setsmaller(String s){
-        this.smaller=s;
+    public void addns(String key,String value){
+        System.out.println("ns-"+key+" "+value);
+        this.ns.put(key,value);
     }
-    public void addmx(String mx,String prio){
-        this.mx.put(mx,prio);
+    public void addmx(String mx,String value){
+        System.out.println("mx-"+mx+" "+value);
+        this.mx.put(mx,value);
     }
-    public void addipsmap(String tipo,String ip){
-        this.ips.put(tipo,ip);
+    public void addAips(String tipo,String ip){
+        System.out.println("Aips-"+tipo+" "+ip);
+        this.Aips.put(tipo,ip);
     }
-    public  void addwww(String ip,String prio){
-        this.www.put(ip,prio);
+    public void addCnames(String tipo,String nome){
+        System.out.println("Cnames-"+tipo+" "+nome);
+        this.cnames.put(tipo,nome);
     }
-    public void addnamesmap(String tipo,String nome){
-        this.names.put(tipo,nome);
-    }
-
-    public List<String> getNS() {
-        return ns;
-    }
-    public HashMap<String, String> getMx() {
-        return mx;
-    }
-    public HashMap<String,String> getNames(){
-        return names;
+    public HashMap<String,String> getAllva(){
+        return allva;
     }
     public String getTtl(){
         return ttl;
     }
-    public HashMap<String,String> getIps(){
-        return ips;
+    public HashMap<String,String> getAIps(){
+        return Aips;
     }
     public void ParserCache(){
         try {
@@ -101,33 +93,46 @@ public class Cache {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] linha = data.split(" ");
-                if (!Objects.equals(linha[0], "#")){
-                    if(Objects.equals(linha[0], "TTL")) {setttl(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "DEFAULT")) {setdfault(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "SOASP")) {setsoasp(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "SOAADMIN")) {setsoaadmin(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "SOASERIAL")) {setsoaserial(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "SOAREFRESH")) {setsoarefresh(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "SOARETRY")) {setsoaretry(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "SOAEXPIRE")) {setsoaexpire(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "NS")) {
-                        String aux = linha[1]+" "+linha[2];
-                        addnslist(aux);
+                if (!Objects.equals(linha[0], "#")) {
+                    if(Objects.equals(linha[0], "@")){
+                        if (Objects.equals(linha[1], "DEFAULT")) {
+                            setdfault(linha[2]);
+                        } else if (Objects.equals(linha[1], "SOASP")) {
+                            setsoasp(linha[2]);
+                        } else if (Objects.equals(linha[1], "SOAADMIN")) {
+                            setsoaadmin(linha[2]);
+                        } else if (Objects.equals(linha[1], "SOASERIAL")) {
+                            setsoaserial(linha[2]);
+                        } else if (Objects.equals(linha[1], "SOAREFRESH")) {
+                            setsoarefresh(linha[2]);
+                        } else if (Objects.equals(linha[1], "SOARETRY")) {
+                            setsoaretry(linha[2]);
+                        } else if (Objects.equals(linha[1], "SOAEXPIRE")) {
+                            setsoaexpire(linha[2]);
+                        } else if (Objects.equals(linha[1], "NS")) {
+                            String[] splt = linha[2].split("\\.");
+                            addns(splt[0], linha[2]);
+                            addAllva(linha[1], linha[2]);
+                        } else if (Objects.equals(linha[1], "MX")) {
+                            String[] splt = linha[2].split("\\.");
+                            String aux = linha[2] + " " + linha[4];
+                            addmx(splt[0], aux);
+                            addAllva(linha[1], aux);
+                        } else addAllva(linha[1], linha[2]);
+                    } else if (Objects.equals(linha[0], "TTL")) {
+                        setttl(linha[2]);
+                    } else if (Objects.equals(linha[1], "A") && Objects.equals(linha[0], "www")) {
+                        String aux = linha[2] + " " + linha[4];
+                        addAips(linha[0], aux);
+                    } else if (Objects.equals(linha[1], "A") && !Objects.equals(linha[0], "www")) {
+                        addAips(linha[0], linha[2]);
+                    } else if (Objects.equals(linha[1], "CNAME")) {
+                        addCnames(linha[2], linha[0]);
                     }
-                    else if(Objects.equals(linha[0], "Smaller.@")) {setsmaller(linha[2]);}
-                    else if(Objects.equals(linha[0], "@") && Objects.equals(linha[1], "MX")) {
-                        String aux = linha[1]+" "+linha[2];
-                        addmx(aux,linha[4]);
-                    }
-                    else if(Objects.equals(linha[1], "A") && !Objects.equals(linha[0], "www")) {addipsmap(linha[0],linha[2]);}
-                    else if(Objects.equals(linha[1], "A") && Objects.equals(linha[0], "www")) {
-                        addwww(linha[2],linha[4]);
-                    }
-                    else if(Objects.equals(linha[1], "CNAME")) {addnamesmap(linha[0],linha[2]);}
                 }
             }
         } catch (Exception e) {
-            System.out.println("Something went wrong.");
+            System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
         }
     }
 }

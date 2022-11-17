@@ -22,7 +22,7 @@ public class Cliente {
             Socket s = new Socket("localhost", 4998);
 
             PrintWriter pr = new PrintWriter((s.getOutputStream()));
-            String qu1 = "3874,Q+R,0,0,0,0;example.com.,;";
+            String qu1 = "3874,Q+R,0,0,0,0;example.com.,NS;";
             pr.println(qu1);
             log.addToFile("QE "+cliente.getIP()+" "+qu1);
             pr.flush();
@@ -31,6 +31,7 @@ public class Cliente {
             InputStreamReader in = new InputStreamReader(s.getInputStream());
             BufferedReader bf = new BufferedReader(in);
             String str = bf.readLine();
+            System.out.println(str);
             log.addToFile("RP "+cliente.getIP()+" "+str);
 
         }catch (IOException e){

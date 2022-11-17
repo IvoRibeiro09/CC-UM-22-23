@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.KeyStore;
 import java.util.*;
 
 public class Query {
@@ -26,8 +23,8 @@ public class Query {
         //Data Info
         this.InfoName = "";
         this.Type ="";
-
     }
+
     public void setID(String s){
         this.ID = s;
     }
@@ -52,42 +49,37 @@ public class Query {
     public void setType(String s){
         this.Type = s;
     }
-    private void ParserQuery(String data) throws IOException {
-        String[] parte = data.split(";");
-        String[] priParte = parte[0].split(",");
-        String[] segParte = parte[1].split(",");
-        setID(priParte[0]);
-        setFlags(priParte[1]);
-        setnResponse(priParte[2]);
-        setnValues(priParte[3]);
-        setnAutho(priParte[4]);
-        setnExtravalues(priParte[5]);
-        setInfoName(segParte[0]);
-        setType(segParte[1]);
+    private void ParserQuery(String data)  {
+        try{
+            String[] parte = data.split(";");
+            String[] priParte = parte[0].split(",");
+            String[] segParte = parte[1].split(",");
+            setID(priParte[0]);
+            setFlags(priParte[1]);
+            setnResponse(priParte[2]);
+            setnValues(priParte[3]);
+            setnAutho(priParte[4]);
+            setnExtravalues(priParte[5]);
+            setInfoName(segParte[0]);
+            setType(segParte[1]);
+        }catch(Exception e){
+            String[] id = data.split(",",1);
+            setID(id[0]);
+            setFlags("");
+            setnResponse("3");
+            setnValues("0");
+            setnAutho("0");
+            setnExtravalues("0");
+            setInfoName("");
+            setType("");
+        }
     }
     public String getId(){
         return ID;
     }
-    public int getnResponse() {
-        return nResponse;
-    }
-
-    public int getnValues() {
-        return nValues;
-    }
-
-    public int getnAutho() {
-        return nAutho;
-    }
-
-    public int getnExtravalues() {
-        return nExtravalues;
-    }
-
     public String getInfoName() {
         return InfoName;
     }
-
     public String getType() {
         return Type;
     }
@@ -95,39 +87,54 @@ public class Query {
         ParserQuery(str);
         Cache ca = new Cache();
         ca.ParserCache();
-
+        String nomedominio = getInfoName();
         String tipo = getType();
-        int valor = 0,nValor=0;
-        if (Objects.equals(tipo, "MX")){
-            valor = (ca.getMx()).size();
-            nValor = (ca.getNS()).size();
-        }else if(Objects.equals(tipo, "NS")){
-            valor = (ca.getNS()).size();
-            nValor = (ca.getMx()).size();
-        }
-        setnValues(Integer.toString(valor));
-        setnAutho(Integer.toString(nValor));
-        setnExtravalues(Integer.toString((ca.getNames()).size()));
-
-
+        int nva=0,nres=0,nextra=0;
         StringBuilder ls = new StringBuilder();
-        ls.append(getId()).append(",R+A,").append(getnResponse()).append(",").append(getnValues()).append(",").append(getnAutho()).append(",").append(getnExtravalues()).append(";").append(getInfoName()).append(",").append(getType()).append(";");
 
-        for(Map.Entry<String,String> entry : (ca.getMx()).entrySet()) {
-            ls.append(getInfoName()).append(" ").append(entry.getKey()).append(" ").append(ca.getTtl()).append(" ").append(entry.getValue()).append(",");
+        StringBuilder rv = new StringBuilder();
+        StringBuilder av = new StringBuilder();
+        StringBuilder ev = new StringBuilder();
+        List<String> listas = new ArrayList<>();
+        Set<String > chaves = ca.getAllva().keySet();
+
+
+        for(String chave : chaves){
+            if(Objects.equals(tipo, ca.getAllva().get(chave))){
+                nva++;
+                if(Objects.equals(tipo, "MX")){
+                    String[] spl = chave.split(" ",2);
+                    listas.add(spl[0]);
+                    rv.append(nomedominio).append(" ").append(tipo).append(" ")
+                            .append(spl[0]).append(" ").append(ca.getTtl()).append(" ")
+                            .append(spl[1]).append(",");
+                }else {
+                    listas.add(chave);
+                    rv.append(nomedominio).append(" ").append(tipo).append(" ")
+                            .append(chave).append(" ").append(ca.getTtl()).append(",");
+                }
+            }
+            if(Objects.equals(ca.getAllva().get(chave),"NS")){
+                nres++;
+                listas.add(chave);
+                av.append(nomedominio).append(" NS ").append(chave)
+                        .append(" ").append(ca.getTtl()).append(",");
+            }
         }
-        ls.deleteCharAt(ls.length() - 1);
-        ls.append(";");
-        for(int j=0;j < getnAutho();j++) {
-            ls.append(getInfoName()).append(" ").append((ca.getNS()).get(j)).append(" ").append(ca.getTtl()).append(",");
+        for (String lista : listas) {
+            nextra++;
+            String[] splt = lista.split("\\.");
+            String ip = ca.getAIps().get(splt[0]);
+            ev.append(splt[0]).append(".").append(nomedominio).append(" A ")
+                    .append(ip).append(" ").append(ca.getTtl()).append(",");
         }
-        ls.deleteCharAt(ls.length() - 1);
-        ls.append(";");
-        for(Map.Entry<String,String> entry : (ca.getNames()).entrySet()){
-            ls.append(entry.getValue()).append(".").append(getInfoName()).append(" A ").append((ca.getIps()).get(entry.getValue())).append(" ").append(ca.getTtl()).append(",");
-        }
-        ls.deleteCharAt(ls.length() - 1);
-        ls.append(";");
+
+        ls.append(getId()).append(",R+A,").append(nres).append(",").append(nva)
+                .append(",").append(nres).append(",").append(nextra).append(";")
+                .append(nomedominio).append(tipo).append(";").append(rv)
+                .deleteCharAt(ls.length() - 1).append(";").append(av)
+                .deleteCharAt(ls.length() - 1).append(";").append(ev)
+                .deleteCharAt(ls.length() - 1).append(";");
 
         return ls.toString();
     }

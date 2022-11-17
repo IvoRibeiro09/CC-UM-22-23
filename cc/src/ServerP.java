@@ -3,9 +3,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
-import static java.lang.Thread.sleep;
-
-
 public class ServerP {
 
     private String db;
@@ -83,8 +80,9 @@ public class ServerP {
                 log.addToFile("QR "+ sp.getSS() + " "+str);
 
                 Query q = new Query();
+                System.out.println("ola");
                 String querydone = q.doquery(str);
-
+                System.out.println("ola");
                 PrintWriter pr = new PrintWriter(s.getOutputStream());
                 pr.println(querydone);
                 log.addToFile("RR "+sp.getSS()+" "+querydone);
