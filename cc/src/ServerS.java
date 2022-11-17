@@ -24,42 +24,27 @@ public class ServerS {
         this.lgall = "";
         this.st = "";
     }
-
     public void setdb(String s){
-        System.out.println(s);
         this.db=s;
     }
-
     public void setss(String s){
-        System.out.println(s);
         this.ss=s;
     }
     public void setsp(String s){
-        System.out.println(s);
         this.ss=s;
     }
-
     public void setdd(String s){
-        System.out.println(s);
         this.dd=s;
     }
-
     public void setlg(String s){
-        System.out.println(s);
         this.lg=s;
     }
-
     public void setlgall(String s){
-        System.out.println(s);
         this.lgall=s;
     }
-
     public void setst(String s){
-        System.out.println(s);
         this.st=s;
     }
-
-
     public void ParserSs(){
         try {
             File ficheiro = new File("testSS.txt");
@@ -76,25 +61,33 @@ public class ServerS {
                 else if(Objects.equals(linha[1], "ST")) {setst(linha[2]);}
             }
         }catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("!!!!Erro na funçao Parser do ServidorS!!!!");
             e.printStackTrace();
         }
     }
     public static void main(String[] args) throws IOException {
-        ServerSocket ss = new ServerSocket(4999);
-        Socket s = ss.accept();
 
-        System.out.println("cliente conectado ao servidor secundario");
+        try {
+            ServerSocket ss = new ServerSocket(4999);
+            while (true) {
+                System.out.println("espera de conexão!!!!!!!!!!!!!!!!!!");
+                Socket s = ss.accept();
+                System.out.println("cliente conectado ao servidor secundario");
 
-        InputStreamReader in = new InputStreamReader(s.getInputStream());
-        BufferedReader bf = new BufferedReader(in);
+                InputStreamReader in = new InputStreamReader(s.getInputStream());
+                BufferedReader bf = new BufferedReader(in);
 
-        String str = bf.readLine();
-        System.out.println("cliente: "+ str);
+                String str = bf.readLine();
+                System.out.println("mensagem do cliente: " + str);
 
-        PrintWriter pr = new PrintWriter(s.getOutputStream());
-        pr.println("yes!!");
-        pr.flush();
-
+                PrintWriter pr = new PrintWriter(s.getOutputStream());
+                pr.println("yes!!");
+                pr.flush();
+                s.close();
+            }
+        }catch (IOException e){
+            System.out.println("!!!!Erro no servidor secundario!!!!");
+            e.printStackTrace();
+        }
     }
 }

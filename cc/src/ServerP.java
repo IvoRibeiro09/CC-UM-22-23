@@ -17,45 +17,33 @@ public class ServerP {
 
     public ServerP(){
        this.db = "";
-       ArrayList<String> gfg = new ArrayList<String>();
-       this.ss = gfg;
+       this.ss =  new ArrayList<>();
        this.dd = "";
        this.lg = "";
        this.lgall = "";
        this.st = "";
     }
-
     public void setdb(String s){
-        System.out.println(s);
         this.db=s;
     }
-
     public void setss(String s){
-        System.out.println(s);
         this.ss.add(s);
     }
-
     public void setdd(String s){
-        System.out.println(s);
         this.dd=s;
     }
-
     public void setlg(String s){
-        System.out.println(s);
         this.lg=s;
     }
-
     public void setlgall(String s){
-        System.out.println(s);
         this.lgall=s;
     }
-
     public void setst(String s){
-        System.out.println(s);
         this.st=s;
     }
-
-
+    public String getSS(){
+        return ss.get(0);
+    }
     public void ParserSp(){
         try {
             File ficheiro = new File("test.txt");
@@ -71,39 +59,44 @@ public class ServerP {
                 else if(Objects.equals(linha[1], "ST")) {setst(linha[2]);}
             }
         }catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("!!!!Erro na funçao Parser so ServidorP!!!!");
             e.printStackTrace();
         }
     }
     public static void main(String[] args) throws IOException, InterruptedException {
-        ServerSocket ss = new ServerSocket(4998);
-        Socket s = ss.accept();
-        System.out.println("cliente conectado ao server primario");
+        ServerP sp = new ServerP();
+        sp.ParserSp();
+        try {
+            ServerSocket ss = new ServerSocket(4998);
+            Logs log = new Logs();
+            while(true) {
+                System.out.println("espera de conexão!!!!!!!!!!!!!!!!!!");
 
-        InputStreamReader in = new InputStreamReader(s.getInputStream());
-        BufferedReader bf = new BufferedReader(in);
+                Socket s = ss.accept();
+                System.out.println("cliente conectado ao server primario");
 
-        String str = bf.readLine();
-        System.out.println("cliente: "+ str);
+                InputStreamReader in = new InputStreamReader(s.getInputStream());
+                BufferedReader bf = new BufferedReader(in);
+
+                String str = bf.readLine();
+                System.out.println("mensagem do cliente: " + str);
+                log.addToFile("QR "+ sp.getSS() + " "+str);
+
+                Query q = new Query();
+                String querydone = q.doquery(str);
+
+                PrintWriter pr = new PrintWriter(s.getOutputStream());
+                pr.println(querydone);
+                log.addToFile("RR "+sp.getSS()+" "+querydone);
+                pr.flush();
+                s.close();
+            }
 
 
 
-
-        Query q = new Query();
-        List<String> querydone = q.doquery(str);
-
-        for (String value : querydone) {
-            System.out.println("ls" + value);
-            PrintWriter pr = new PrintWriter(s.getOutputStream());
-            pr.println(value);
-            pr.flush();
-            sleep(1);
+        }catch (IOException e ){
+            System.out.println("!!!!Erro no ServidorP!!!!");
+            e.printStackTrace();
         }
-        /*
-        PrintWriter pr = new PrintWriter(s.getOutputStream());
-        pr.println("yes!!" + querydone.get(1));
-        pr.flush();
-*/
-
     }
 }

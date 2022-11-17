@@ -5,26 +5,37 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Cliente {
+
+    private String ip;
+
+    public Cliente(){
+        this.ip = "10.0.0.1";
+    }
+    public String getIP(){
+        return ip;
+    }
+
     public static void main(String[] args) throws IOException {
+        Cliente cliente = new Cliente();
+        Logs log = new Logs();
         try {
             Socket s = new Socket("localhost", 4998);
 
             PrintWriter pr = new PrintWriter((s.getOutputStream()));
-            String qu1 = "3874,Q+R,0,0,0,0;example.com.,MX;";
+            String qu1 = "3874,Q+R,0,0,0,0;example.com.,;";
             pr.println(qu1);
+            log.addToFile("QE "+cliente.getIP()+" "+qu1);
             pr.flush();
 
-            int i =0;
-            while(i<12) {
-                InputStreamReader in = new InputStreamReader(s.getInputStream());
-                BufferedReader bf = new BufferedReader(in);
 
-                String str = bf.readLine();
-                System.out.println("serverP: " + str);
-                i++;
-            }
-        }catch (IOException exception){
-            //controlo de erros
+            InputStreamReader in = new InputStreamReader(s.getInputStream());
+            BufferedReader bf = new BufferedReader(in);
+            String str = bf.readLine();
+            log.addToFile("RP "+cliente.getIP()+" "+str);
+
+        }catch (IOException e){
+            System.out.println("!!!!Erro no cliente ao conector ao ServidorP!!!!");
+            e.printStackTrace();
         }
         try {
             Socket s1 = new Socket("localhost", 4999);
@@ -38,8 +49,9 @@ public class Cliente {
 
             String str1 = bf1.readLine();
             System.out.println("serverS: " + str1);
-        }catch (IOException exception){
-            //controlo de erros
+        }catch (IOException e){
+            System.out.println("!!!!Erro no cliente ao conectar ao ServidorS!!!!");
+            e.printStackTrace();
         }
 
     }

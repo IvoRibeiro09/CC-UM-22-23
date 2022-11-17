@@ -16,50 +16,42 @@ public class Query {
     private String Type;
 
     public Query(){
+        //header Info
         this.ID = "";
         this.Flags="";
         this.nResponse = 0;
         this.nValues = 0;
         this.nAutho = 0;
         this.nExtravalues = 0;
+        //Data Info
         this.InfoName = "";
         this.Type ="";
 
     }
-
     public void setID(String s){
-        System.out.println(s);
         this.ID = s;
     }
     public void setFlags(String s){
-        System.out.println(s);
         this.Flags = s;
     }
     public void setnResponse(String s){
-        System.out.println(s);
         this.nResponse = Integer.parseInt(s);
     }
     public void setnValues(String s){
-        System.out.println(s);
         this.nValues = Integer.parseInt(s);
     }
     public void setnAutho(String s){
-        System.out.println(s);
         this.nAutho= Integer.parseInt(s);
     }
     public void setnExtravalues(String s){
-        System.out.println(s);
         this.nExtravalues = Integer.parseInt(s);
     }
     public void setInfoName(String s){
-        System.out.println(s);
         this.InfoName = s;
     }
     public void setType(String s){
-        System.out.println(s);
         this.Type = s;
     }
-
     private void ParserQuery(String data) throws IOException {
         String[] parte = data.split(";");
         String[] priParte = parte[0].split(",");
@@ -99,12 +91,11 @@ public class Query {
     public String getType() {
         return Type;
     }
-    public List<String> doquery(String str) throws IOException {
+    public String doquery(String str) throws IOException {
         ParserQuery(str);
         Cache ca = new Cache();
         ca.ParserCache();
 
-        List<String> ls = new ArrayList<>();
         String tipo = getType();
         int valor = 0,nValor=0;
         if (Objects.equals(tipo, "MX")){
@@ -118,22 +109,26 @@ public class Query {
         setnAutho(Integer.toString(nValor));
         setnExtravalues(Integer.toString((ca.getNames()).size()));
 
-        String fsrt = getId()+",R+A,"+getnResponse()+","+getnValues()+","+getnAutho()+","+getnExtravalues()+";"+getInfoName()+","+getType()+";";
-        ls.add(fsrt);
+
+        StringBuilder ls = new StringBuilder();
+        ls.append(getId()).append(",R+A,").append(getnResponse()).append(",").append(getnValues()).append(",").append(getnAutho()).append(",").append(getnExtravalues()).append(";").append(getInfoName()).append(",").append(getType()).append(";");
+
         for(Map.Entry<String,String> entry : (ca.getMx()).entrySet()) {
-            ls.add(getInfoName() + " " + entry.getKey() +" "+ca.getTtl()+" "+entry.getValue());
+            ls.append(getInfoName()).append(" ").append(entry.getKey()).append(" ").append(ca.getTtl()).append(" ").append(entry.getValue()).append(",");
         }
+        ls.deleteCharAt(ls.length() - 1);
+        ls.append(";");
         for(int j=0;j < getnAutho();j++) {
-            ls.add(getInfoName() + " " + (ca.getNS()).get(j)+" "+ca.getTtl());
+            ls.append(getInfoName()).append(" ").append((ca.getNS()).get(j)).append(" ").append(ca.getTtl()).append(",");
         }
+        ls.deleteCharAt(ls.length() - 1);
+        ls.append(";");
         for(Map.Entry<String,String> entry : (ca.getNames()).entrySet()){
-            ls.add(entry.getValue()+"."+getInfoName()+" A " + (ca.getIps()).get(entry.getValue())+" "+ ca.getTtl() );
+            ls.append(entry.getValue()).append(".").append(getInfoName()).append(" A ").append((ca.getIps()).get(entry.getValue())).append(" ").append(ca.getTtl()).append(",");
         }
-    /*
-        for(int i=0;i<(getnAutho()+getnValues()+getnExtravalues()+1);i++){
-            System.out.println(ls.get(i));
-        }
-    */
-        return ls;
+        ls.deleteCharAt(ls.length() - 1);
+        ls.append(";");
+
+        return ls.toString();
     }
 }
