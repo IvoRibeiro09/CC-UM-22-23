@@ -83,10 +83,66 @@ public class Query {
     public String getType() {
         return Type;
     }
-    public String doquery(String str) throws IOException {
+    public String doquerySP(String str) throws IOException {
         ParserQuery(str);
-        Cache ca = new Cache();
+        CacheSP ca = new CacheSP();
         ca.ParserCache();
+        String nomedominio = getInfoName();
+        String tipo = getType();
+        int nva=0,nres=0,nextra=0;
+        StringBuilder ls = new StringBuilder();
+
+        StringBuilder rv = new StringBuilder();
+        StringBuilder av = new StringBuilder();
+        StringBuilder ev = new StringBuilder();
+        List<String> listas = new ArrayList<>();
+        Set<String > chaves = ca.getAllva().keySet();
+
+
+        for(String chave : chaves){
+            if(Objects.equals(tipo, ca.getAllva().get(chave))){
+                nva++;
+                if(Objects.equals(tipo, "MX")){
+                    String[] spl = chave.split(" ",2);
+                    listas.add(spl[0]);
+                    rv.append(nomedominio).append(" ").append(tipo).append(" ")
+                            .append(spl[0]).append(" ").append(ca.getTtl()).append(" ")
+                            .append(spl[1]).append(",");
+                }else {
+                    listas.add(chave);
+                    rv.append(nomedominio).append(" ").append(tipo).append(" ")
+                            .append(chave).append(" ").append(ca.getTtl()).append(",");
+                }
+            }
+            if(Objects.equals(ca.getAllva().get(chave),"NS")){
+                nres++;
+                listas.add(chave);
+                av.append(nomedominio).append(" NS ").append(chave)
+                        .append(" ").append(ca.getTtl()).append(",");
+            }
+        }
+        for (String lista : listas) {
+            nextra++;
+            String[] splt = lista.split("\\.");
+            String ip = ca.getAIps().get(splt[0]);
+            ev.append(splt[0]).append(".").append(nomedominio).append(" A ")
+                    .append(ip).append(" ").append(ca.getTtl()).append(",");
+        }
+
+        ls.append(getId()).append(",R+A,").append(nres).append(",").append(nva)
+                .append(",").append(nres).append(",").append(nextra).append(";")
+                .append(nomedominio).append(tipo).append(";").append(rv)
+                .deleteCharAt(ls.length() - 1).append(";").append(av)
+                .deleteCharAt(ls.length() - 1).append(";").append(ev)
+                .deleteCharAt(ls.length() - 1).append(";");
+
+        return ls.toString();
+    }
+
+    public String doquerySS(String str) throws IOException {
+        ParserQuery(str);
+        CacheSS ca = new CacheSS();
+        ca.ParserCacheSS();
         String nomedominio = getInfoName();
         String tipo = getType();
         int nva=0,nres=0,nextra=0;

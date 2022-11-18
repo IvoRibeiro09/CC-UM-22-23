@@ -10,7 +10,7 @@ public class Main {
         ServerS ss = new ServerS();
         ss.ParserSs();
         System.out.println("Ss done!");
-        Cache ca = new Cache();
+        CacheSP ca = new CacheSP();
         ca.ParserCache();
         System.out.println("Cache done!");
 

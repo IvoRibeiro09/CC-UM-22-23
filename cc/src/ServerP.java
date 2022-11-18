@@ -81,7 +81,7 @@ public class ServerP {
 
                 Query q = new Query();
                 System.out.println("ola");
-                String querydone = q.doquery(str);
+                String querydone = q.doquerySP(str);
                 System.out.println("ola");
                 PrintWriter pr = new PrintWriter(s.getOutputStream());
                 pr.println(querydone);
