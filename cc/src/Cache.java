@@ -86,9 +86,10 @@ public class Cache {
     public HashMap<String,String> getAIps(){
         return Aips;
     }
-    public void ParserCache(){
+
+    public boolean ParserCacheSP(String str){
         try {
-            File ficheiro = new File("testbd.txt");
+            File ficheiro = new File(str);
             Scanner myReader = new Scanner(ficheiro);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -131,8 +132,45 @@ public class Cache {
                     }
                 }
             }
+            return true;
         } catch (Exception e) {
-            System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
+            //System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
+            return false;
+        }
+    }
+    public void setAllva(HashMap<String,String> mapallva){
+        this.allva=mapallva;
+    }
+    public void setns(HashMap<String,String> mapns){
+        this.ns = mapns;
+    }
+    public void setmx(HashMap<String,String> mapmx){
+        this.mx = mapmx;
+    }
+    public void setAips(HashMap<String,String> mapaips){
+        this.Aips = mapaips;
+    }
+    public void setCnames(HashMap<String,String> mapcnames){
+        this.cnames = mapcnames;
+    }
+
+    public void ParserCacheSS(){
+        try {
+            CacheSP sp = new CacheSP();
+            setdfault(sp.getDfault());
+            setsoasp(sp.getSoasp());
+            setsoaadmin((sp.getSoaadmin()));
+            setsoaserial((sp.getSoaserial()));
+            setsoarefresh(sp.getSoarefresh());
+            setsoaretry(sp.getSoaretry());
+            setsoaexpire(sp.getSoaexpire());
+            setAllva(sp.getAllva());
+            setns(sp.getNs());
+            setmx(sp.getMx());
+            setAips(sp.getAIps());
+            setCnames(sp.getCnames());
+        } catch (Exception e) {
+            System.out.println("!!!!Erro no acesso á cache do SP!!!!");
         }
     }
 }
