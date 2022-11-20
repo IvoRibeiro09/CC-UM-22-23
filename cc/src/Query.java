@@ -83,14 +83,14 @@ public class Query {
     public String getType() {
         return Type;
     }
-    public String doquery(String str) throws IOException {
+
+    public String doQuery(String str) throws IOException {
         ParserQuery(str);
         String nomedominio = getInfoName();
         int nva=0,nres=0,nextra=0,error1=0,error2=0;
-
         Cache ca = new Cache();
-        String strfile = str +(".txt");
-        if (!ca.ParserCache(strfile)) error1++;
+        String strfile = str + (".txt");
+        if (!ca.ParserCacheSP(strfile)) error1++;
         String tipo = getType();
         StringBuilder ls = new StringBuilder();
 
@@ -99,7 +99,6 @@ public class Query {
         StringBuilder ev = new StringBuilder();
         List<String> listas = new ArrayList<>();
         Set<String > chaves = ca.getAllva().keySet();
-
 
         for(String chave : chaves){
             if(Objects.equals(tipo, ca.getAllva().get(chave))){
@@ -131,8 +130,6 @@ public class Query {
             ev.append(splt[0]).append(".").append(nomedominio).append(" A ")
                     .append(ip).append(" ").append(ca.getTtl()).append(",");
         }
-
-
         if(error1 == 0 && error2 == 0) {
             ls.append(getId()).append(",R+A,1+2,0,0,0;").append(nomedominio).append(",").append(tipo).append(";");
             return ls.toString();
@@ -143,7 +140,6 @@ public class Query {
             ls.append(getId()).append(",R+A,2,0,0,0;").append(nomedominio).append(",").append(tipo).append(";");
             return ls.toString();
         }
-
         ls.append(getId()).append(",R+A,").append(nres).append(",").append(nva)
                 .append(",").append(nres).append(",").append(nextra).append(";")
                 .append(nomedominio).append(",").append(tipo).append(";").append(rv)

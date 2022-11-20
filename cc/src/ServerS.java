@@ -45,9 +45,10 @@ public class ServerS {
     public void setst(String s){
         this.st=s;
     }
-    public void ParserSs(){
+
+    public void ParserSs(String str){
         try {
-            File ficheiro = new File("testSS.txt");
+            File ficheiro = new File(str);
             Scanner myReader = new Scanner(ficheiro);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -65,8 +66,13 @@ public class ServerS {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) throws IOException {
 
+    public static void main(String[] args) throws IOException {
+        String strtxt  = "testSS.txt";
+        ServerS servidor = new ServerS();
+        servidor.ParserSs(strtxt);
+        Cache cachess = new Cache();
+        cachess.ParserCacheSS("example..txt");
         try {
             ServerSocket ss = new ServerSocket(4999);
             while (true) {

@@ -57,25 +57,39 @@ public class Cache {
     public void setsoaexpire(String s){
         this.soasp = s;
     }
-    public void addAllva(String key,String value){
-        System.out.println("allva-v-"+value+" k-"+key);
+    public void setAllva(String key,String value){
         this.allva.put(value,key);
     }
-    public void addns(String key,String value){
-        System.out.println("ns-"+key+" "+value);
+    public void setAllvaMap(HashMap<String ,String> hash){
+        this.allva= hash;
+    }
+    public void setNs(String key,String value){
         this.ns.put(key,value);
     }
-    public void addmx(String mx,String value){
-        System.out.println("mx-"+mx+" "+value);
+    public void setMx(String mx,String value){
         this.mx.put(mx,value);
     }
-    public void addAips(String tipo,String ip){
-        System.out.println("Aips-"+tipo+" "+ip);
+    public void setAips(String tipo,String ip){
         this.Aips.put(tipo,ip);
     }
-    public void addCnames(String tipo,String nome){
-        System.out.println("Cnames-"+tipo+" "+nome);
+    public void setCnames(String tipo,String nome){
         this.cnames.put(tipo,nome);
+    }
+    private void setAipsMap(HashMap<String, String> aIps) {
+        this.Aips = aIps;
+    }
+    private void setMxMap(HashMap<String,String> mx) {
+        this.mx = mx;
+    }
+    private void setNsMap(HashMap<String ,String > ns) {
+        this.ns = ns;
+    }
+    private void setCnamesMap(HashMap<String, String> cnames) {
+        this.allva = cnames;
+    }
+
+    public String getDfault(){
+        return this.dfault;
     }
     public HashMap<String,String> getAllva(){
         return allva;
@@ -86,6 +100,34 @@ public class Cache {
     public HashMap<String,String> getAIps(){
         return Aips;
     }
+    private HashMap<String, String> getCnames() {
+        return this.cnames;
+    }
+    private HashMap<String, String> getMx() {
+        return this.mx;
+    }
+    private HashMap<String, String> getNs() {
+        return this.ns;
+    }
+    private String getSoaexpire() {
+        return this.soaexpire;
+    }
+    private String getSoaretry() {
+        return this.soaretry;
+    }
+    private String getSoarefresh() {
+        return this.soarefresh;
+    }
+    private String getSoaserial() {
+        return this.soaserial;
+    }
+    private String getSoaadmin() {
+        return this.soaadmin;
+    }
+    private String getSoasp() {
+        return this.soasp;
+    }
+
 
     public boolean ParserCacheSP(String str){
         try {
@@ -112,65 +154,53 @@ public class Cache {
                             setsoaexpire(linha[2]);
                         } else if (Objects.equals(linha[1], "NS")) {
                             String[] splt = linha[2].split("\\.");
-                            addns(splt[0], linha[2]);
-                            addAllva(linha[1], linha[2]);
+                            setNs(splt[0], linha[2]);
+                            setAllva(linha[1], linha[2]);
                         } else if (Objects.equals(linha[1], "MX")) {
                             String[] splt = linha[2].split("\\.");
                             String aux = linha[2] + " " + linha[4];
-                            addmx(splt[0], aux);
-                            addAllva(linha[1], aux);
-                        } else addAllva(linha[1], linha[2]);
+                            setMx(splt[0], aux);
+                            setAllva(linha[1], aux);
+                        } else setAllva(linha[1], linha[2]);
                     } else if (Objects.equals(linha[0], "TTL")) {
                         setttl(linha[2]);
                     } else if (Objects.equals(linha[1], "A") && Objects.equals(linha[0], "www")) {
                         String aux = linha[2] + " " + linha[4];
-                        addAips(linha[0], aux);
+                        setAips(linha[0], aux);
                     } else if (Objects.equals(linha[1], "A") && !Objects.equals(linha[0], "www")) {
-                        addAips(linha[0], linha[2]);
+                        setAips(linha[0], linha[2]);
                     } else if (Objects.equals(linha[1], "CNAME")) {
-                        addCnames(linha[2], linha[0]);
+                        setCnames(linha[2], linha[0]);
                     }
                 }
             }
             return true;
         } catch (Exception e) {
-            //System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
+            System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
             return false;
         }
     }
-    public void setAllva(HashMap<String,String> mapallva){
-        this.allva=mapallva;
-    }
-    public void setns(HashMap<String,String> mapns){
-        this.ns = mapns;
-    }
-    public void setmx(HashMap<String,String> mapmx){
-        this.mx = mapmx;
-    }
-    public void setAips(HashMap<String,String> mapaips){
-        this.Aips = mapaips;
-    }
-    public void setCnames(HashMap<String,String> mapcnames){
-        this.cnames = mapcnames;
-    }
 
-    public void ParserCacheSS(){
+    public boolean ParserCacheSS(String str){
+        if(!Objects.equals(str, getDfault())) return false;
         try {
-            CacheSP sp = new CacheSP();
-            setdfault(sp.getDfault());
-            setsoasp(sp.getSoasp());
-            setsoaadmin((sp.getSoaadmin()));
-            setsoaserial((sp.getSoaserial()));
-            setsoarefresh(sp.getSoarefresh());
-            setsoaretry(sp.getSoaretry());
-            setsoaexpire(sp.getSoaexpire());
-            setAllva(sp.getAllva());
-            setns(sp.getNs());
-            setmx(sp.getMx());
-            setAips(sp.getAIps());
-            setCnames(sp.getCnames());
+            Cache cass = new Cache();
+            cass.setdfault(getDfault());
+            cass.setsoasp(getSoasp());
+            cass.setsoaadmin((getSoaadmin()));
+            cass.setsoaserial(getSoaserial());
+            cass.setsoarefresh(getSoarefresh());
+            cass.setsoaretry(getSoaretry());
+            cass.setsoaexpire(getSoaexpire());
+            cass.setAllvaMap(getAllva());
+            cass.setNsMap(getNs());
+            cass.setMxMap(getMx());
+            cass.setAipsMap(getAIps());
+            cass.setCnamesMap(getCnames());
+            return true;
         } catch (Exception e) {
             System.out.println("!!!!Erro no acesso á cache do SP!!!!");
+            return false;
         }
     }
 }
