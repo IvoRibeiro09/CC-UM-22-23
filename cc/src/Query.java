@@ -89,64 +89,62 @@ public class Query {
         String nomedominio = getInfoName();
         int nva=0,nres=0,nextra=0,error1=0,error2=0;
         Cache ca = new Cache();
-        String strfile = str + (".txt");
-        if (!ca.ParserCacheSP(strfile)) error1++;
-        String tipo = getType();
+        String strfile = nomedominio + ("txt");
         StringBuilder ls = new StringBuilder();
-
+        String tipo = getType();
         StringBuilder rv = new StringBuilder();
         StringBuilder av = new StringBuilder();
         StringBuilder ev = new StringBuilder();
         List<String> listas = new ArrayList<>();
-        Set<String > chaves = ca.getAllva().keySet();
+        Set<String> chaves = ca.getAllva().keySet();
 
-        for(String chave : chaves){
-            if(Objects.equals(tipo, ca.getAllva().get(chave))){
-                nva++;
-                error1++;
-                if(Objects.equals(tipo, "MX")){
-                    String[] spl = chave.split(" ",2);
-                    listas.add(spl[0]);
-                    rv.append(nomedominio).append(" ").append(tipo).append(" ")
-                            .append(spl[0]).append(" ").append(ca.getTtl()).append(" ")
-                            .append(spl[1]).append(",");
-                }else {
+        if (!ca.ParserCacheSP(strfile)) error2++;
+        else {
+            for (String chave : chaves) {
+                if (Objects.equals(tipo, ca.getAllva().get(chave))) {
+                    nva++;
+                    error1++;
+                    if (Objects.equals(tipo, "MX")) {
+                        String[] spl = chave.split(" ", 2);
+                        listas.add(spl[0]);
+                        rv.append(nomedominio).append(" ").append(tipo).append(" ")
+                                .append(spl[0]).append(" ").append(ca.getTtl()).append(" ")
+                                .append(spl[1]).append(",");
+                    } else {
+                        listas.add(chave);
+                        rv.append(nomedominio).append(" ").append(tipo).append(" ")
+                                .append(chave).append(" ").append(ca.getTtl()).append(",");
+                    }
+                }
+                if (Objects.equals(ca.getAllva().get(chave), "NS")) {
+                    nres++;
                     listas.add(chave);
-                    rv.append(nomedominio).append(" ").append(tipo).append(" ")
-                            .append(chave).append(" ").append(ca.getTtl()).append(",");
+                    av.append(nomedominio).append(" NS ").append(chave)
+                            .append(" ").append(ca.getTtl()).append(",");
                 }
             }
-            if(Objects.equals(ca.getAllva().get(chave),"NS")){
-                nres++;
-                listas.add(chave);
-                av.append(nomedominio).append(" NS ").append(chave)
-                        .append(" ").append(ca.getTtl()).append(",");
+            for (String lista : listas) {
+                nextra++;
+                String[] splt = lista.split("\\.");
+                String ip = ca.getAIps().get(splt[0]);
+                ev.append(splt[0]).append(".").append(nomedominio).append(" A ")
+                        .append(ip).append(" ").append(ca.getTtl()).append(",");
             }
         }
-        for (String lista : listas) {
-            nextra++;
-            String[] splt = lista.split("\\.");
-            String ip = ca.getAIps().get(splt[0]);
-            ev.append(splt[0]).append(".").append(nomedominio).append(" A ")
-                    .append(ip).append(" ").append(ca.getTtl()).append(",");
-        }
         if(error1 == 0 && error2 == 0) {
-            ls.append(getId()).append(",R+A,1+2,0,0,0;").append(nomedominio).append(",").append(tipo).append(";");
-            return ls.toString();
-        }else if(error1 == 0) {
             ls.append(getId()).append(",R+A,1,0,0,0;").append(nomedominio).append(",").append(tipo).append(";");
             return ls.toString();
-        }else if(error2 == 0){
+        }else if(error1 == 0){
             ls.append(getId()).append(",R+A,2,0,0,0;").append(nomedominio).append(",").append(tipo).append(";");
             return ls.toString();
+        }else {
+            ls.append(getId()).append(",R+A,").append("0").append(",").append(nva)
+                    .append(",").append(nres).append(",").append(nextra).append(";")
+                    .append(nomedominio).append(",").append(tipo).append(";").append(rv)
+                    .deleteCharAt(ls.length() - 1).append(";").append(av)
+                    .deleteCharAt(ls.length() - 1).append(";").append(ev)
+                    .deleteCharAt(ls.length() - 1).append(";");
+            return ls.toString();
         }
-        ls.append(getId()).append(",R+A,").append(nres).append(",").append(nva)
-                .append(",").append(nres).append(",").append(nextra).append(";")
-                .append(nomedominio).append(",").append(tipo).append(";").append(rv)
-                .deleteCharAt(ls.length() - 1).append(";").append(av)
-                .deleteCharAt(ls.length() - 1).append(";").append(ev)
-                .deleteCharAt(ls.length() - 1).append(";");
-
-        return ls.toString();
     }
 }

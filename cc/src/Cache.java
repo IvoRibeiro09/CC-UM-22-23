@@ -133,6 +133,7 @@ public class Cache {
         try {
             File ficheiro = new File(str);
             Scanner myReader = new Scanner(ficheiro);
+
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] linha = data.split(" ");
@@ -176,7 +177,7 @@ public class Cache {
             }
             return true;
         } catch (Exception e) {
-            System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
+            //System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
             return false;
         }
     }
