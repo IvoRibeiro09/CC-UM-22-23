@@ -84,12 +84,10 @@ public class Query {
         return Type;
     }
 
-    public String doQuery(String str) throws IOException {
+    public String doQuery(String str,Cache ca) throws IOException {
         ParserQuery(str);
         String nomedominio = getInfoName();
         int nva=0,nres=0,nextra=0,error1=0,error2=0;
-        Cache ca = new Cache();
-        String strfile = nomedominio + ("txt");
         StringBuilder ls = new StringBuilder();
         String tipo = getType();
         StringBuilder rv = new StringBuilder();
@@ -98,7 +96,7 @@ public class Query {
         List<String> listas = new ArrayList<>();
         Set<String> chaves = ca.getAllva().keySet();
 
-        if (!ca.ParserCacheSP(strfile)) error2++;
+        if (!Objects.equals(ca.getDfault(), nomedominio)) error2++;
         else {
             for (String chave : chaves) {
                 if (Objects.equals(tipo, ca.getAllva().get(chave))) {
@@ -147,4 +145,6 @@ public class Query {
             return ls.toString();
         }
     }
+
+
 }

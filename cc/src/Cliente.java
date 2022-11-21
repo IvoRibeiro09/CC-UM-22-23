@@ -23,7 +23,7 @@ public class Cliente {
 
             PrintWriter pr = new PrintWriter((s.getOutputStream()));
             String qu1 = "3874,Q+R,0,0,0,0;example.com.,MX;";
-            pr.println(qu1);
+            pr.println("QE " + qu1);
             log.addToFile("QE "+cliente.getIP()+" "+qu1);
             pr.flush();
 
@@ -37,7 +37,7 @@ public class Cliente {
         }catch (IOException e){
             System.out.println("!!!!Erro no cliente ao conector ao ServidorP!!!!");
             e.printStackTrace();
-        }
+        }/*
         try {
             Socket s1 = new Socket("localhost", 4999);
 
@@ -54,6 +54,6 @@ public class Cliente {
             System.out.println("!!!!Erro no cliente ao conectar ao ServidorS!!!!");
             e.printStackTrace();
         }
-
+*/
     }
 }

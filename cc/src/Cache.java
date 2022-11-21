@@ -16,6 +16,8 @@ public class Cache {
      private HashMap<String,String> mx;
      private HashMap<String,String> Aips;
     private HashMap<String,String> cnames;
+    private int lines ;
+    private ArrayList<String> AllLines;
 
 
     public Cache(){
@@ -31,6 +33,8 @@ public class Cache {
         this.mx = new HashMap<>();
         this.Aips = new HashMap<>();
         this.cnames = new HashMap<>();
+        this.lines = 0;
+        this.AllLines = new ArrayList<String>();
     }
 
     public void setdfault(String s){
@@ -75,18 +79,13 @@ public class Cache {
     public void setCnames(String tipo,String nome){
         this.cnames.put(tipo,nome);
     }
-    private void setAipsMap(HashMap<String, String> aIps) {
-        this.Aips = aIps;
+    public void setAllLines(String s){
+        this.AllLines.add(s);
     }
-    private void setMxMap(HashMap<String,String> mx) {
-        this.mx = mx;
+    public void incLines(){
+        this.lines++;
     }
-    private void setNsMap(HashMap<String ,String > ns) {
-        this.ns = ns;
-    }
-    private void setCnamesMap(HashMap<String, String> cnames) {
-        this.allva = cnames;
-    }
+
 
     public String getDfault(){
         return this.dfault;
@@ -108,6 +107,9 @@ public class Cache {
     }
     private HashMap<String, String> getNs() {
         return this.ns;
+    }
+    public int getNumeberOfLinesSP() {
+        return this.lines;
     }
     private String getSoaexpire() {
         return this.soaexpire;
@@ -131,77 +133,94 @@ public class Cache {
 
     public boolean ParserCacheSP(String str){
         try {
-            File ficheiro = new File(str);
+            String strfile = str +"db";
+            File ficheiro = new File(strfile);
             Scanner myReader = new Scanner(ficheiro);
 
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                String[] linha = data.split(" ");
-                if (!Objects.equals(linha[0], "#")) {
-                    if(Objects.equals(linha[0], "@")){
-                        if (Objects.equals(linha[1], "DEFAULT")) {
-                            setdfault(linha[2]);
-                        } else if (Objects.equals(linha[1], "SOASP")) {
-                            setsoasp(linha[2]);
-                        } else if (Objects.equals(linha[1], "SOAADMIN")) {
-                            setsoaadmin(linha[2]);
-                        } else if (Objects.equals(linha[1], "SOASERIAL")) {
-                            setsoaserial(linha[2]);
-                        } else if (Objects.equals(linha[1], "SOAREFRESH")) {
-                            setsoarefresh(linha[2]);
-                        } else if (Objects.equals(linha[1], "SOARETRY")) {
-                            setsoaretry(linha[2]);
-                        } else if (Objects.equals(linha[1], "SOAEXPIRE")) {
-                            setsoaexpire(linha[2]);
-                        } else if (Objects.equals(linha[1], "NS")) {
-                            String[] splt = linha[2].split("\\.");
-                            setNs(splt[0], linha[2]);
-                            setAllva(linha[1], linha[2]);
-                        } else if (Objects.equals(linha[1], "MX")) {
-                            String[] splt = linha[2].split("\\.");
-                            String aux = linha[2] + " " + linha[4];
-                            setMx(splt[0], aux);
-                            setAllva(linha[1], aux);
-                        } else setAllva(linha[1], linha[2]);
-                    } else if (Objects.equals(linha[0], "TTL")) {
-                        setttl(linha[2]);
-                    } else if (Objects.equals(linha[1], "A") && Objects.equals(linha[0], "www")) {
-                        String aux = linha[2] + " " + linha[4];
-                        setAips(linha[0], aux);
-                    } else if (Objects.equals(linha[1], "A") && !Objects.equals(linha[0], "www")) {
-                        setAips(linha[0], linha[2]);
-                    } else if (Objects.equals(linha[1], "CNAME")) {
-                        setCnames(linha[2], linha[0]);
-                    }
-                }
+                ParserPorLinha(data);
             }
             return true;
         } catch (Exception e) {
-            //System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
+            System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
             return false;
         }
     }
 
-    public boolean ParserCacheSS(String str){
-        if(!Objects.equals(str, getDfault())) return false;
-        try {
-            Cache cass = new Cache();
-            cass.setdfault(getDfault());
-            cass.setsoasp(getSoasp());
-            cass.setsoaadmin((getSoaadmin()));
-            cass.setsoaserial(getSoaserial());
-            cass.setsoarefresh(getSoarefresh());
-            cass.setsoaretry(getSoaretry());
-            cass.setsoaexpire(getSoaexpire());
-            cass.setAllvaMap(getAllva());
-            cass.setNsMap(getNs());
-            cass.setMxMap(getMx());
-            cass.setAipsMap(getAIps());
-            cass.setCnamesMap(getCnames());
-            return true;
-        } catch (Exception e) {
-            System.out.println("!!!!Erro no acesso á cache do SP!!!!");
-            return false;
+    public void ParserPorLinha(String str) {
+
+        String[] linha = str.split(" ");
+        if (!Objects.equals(linha[0], "#")) {
+            if (Objects.equals(linha[0], "@")) {
+                if (Objects.equals(linha[1], "DEFAULT")) {
+                    setdfault(linha[2]);
+                } else if (Objects.equals(linha[1], "SOASP")) {
+                    setsoasp(linha[2]);
+                    incLines();
+                    setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
+                } else if (Objects.equals(linha[1], "SOAADMIN")) {
+                    setsoaadmin(linha[2]);
+                    incLines();
+                    setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
+                } else if (Objects.equals(linha[1], "SOASERIAL")) {
+                    setsoaserial(linha[2]);
+                    incLines();
+                    setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
+                } else if (Objects.equals(linha[1], "SOAREFRESH")) {
+                    setsoarefresh(linha[2]);
+                    incLines();
+                    setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
+                } else if (Objects.equals(linha[1], "SOARETRY")) {
+                    setsoaretry(linha[2]);
+                    incLines();
+                    setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
+                } else if (Objects.equals(linha[1], "SOAEXPIRE")) {
+                    setsoaexpire(linha[2]);
+                    incLines();
+                    setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
+                } else if (Objects.equals(linha[1], "NS")) {
+                    String[] splt = linha[2].split("\\.");
+                    setNs(splt[0], linha[2]);
+                    incLines();
+                    setAllva(linha[1], linha[2]);
+                    setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
+                } else if (Objects.equals(linha[1], "MX")) {
+                    String[] splt = linha[2].split("\\.");
+                    String aux = linha[2] + " " + linha[4];
+                    setMx(splt[0], aux);
+                    setAllva(linha[1], aux);
+                    incLines();
+                    setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl()+" "+linha[4]);
+                } else {
+                    setAllva(linha[1], linha[2]);
+                    incLines();
+                    setAllLines(getDfault()+" "+linha[1]+" "+linha[2]);
+                }
+            } else if (Objects.equals(linha[0], "TTL")) {
+                setttl(linha[2]);
+            }else if (Objects.equals(linha[0],"Smaller.@")){
+                setAllva(linha[1], linha[2]);
+                incLines();
+                setAllLines(getDfault()+" "+linha[1]+" "+linha[2]);
+            } else if (Objects.equals(linha[1], "A") && Objects.equals(linha[0], "www")) {
+                String aux = linha[2] + " " + linha[4];
+                setAips(linha[0], aux);
+                incLines();
+                setAllLines(linha[0]+"."+getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl()+" "+linha[4]);
+            } else if (Objects.equals(linha[1], "A") && !Objects.equals(linha[0], "www")) {
+                setAips(linha[0], linha[2]);
+                incLines();
+                setAllLines(linha[0]+"."+getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
+            } else if (Objects.equals(linha[1], "CNAME")) {
+                setCnames(linha[2], linha[0]);
+                incLines();
+                setAllLines(linha[0]+"."+getDfault()+" "+linha[1]+" "+linha[2]+"."+getDfault()+" "+getTtl());
+            }
         }
+    }
+
+    public String getCacheLine(int i){
+        return AllLines.get(i);
     }
 }

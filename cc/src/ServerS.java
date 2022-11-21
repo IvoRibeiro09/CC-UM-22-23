@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class ServerS {
+    private String name;
     private String db;
     private String ss;
     private String sp;
@@ -14,8 +15,10 @@ public class ServerS {
     private String lg;
     private String lgall;
     private String st;
+    private int refresh;
 
     public ServerS(){
+        this.name = "";
         this.db = "";
         this.ss = "";
         this.sp = "";
@@ -23,7 +26,9 @@ public class ServerS {
         this.lg = "";
         this.lgall = "";
         this.st = "";
+        this.refresh = 0;
     }
+    public void setname(String s){this.name= s;}
     public void setdb(String s){
         this.db=s;
     }
@@ -46,6 +51,10 @@ public class ServerS {
         this.st=s;
     }
 
+    public String getname(){
+        return name;
+    }
+
     public void ParserSs(String str){
         try {
             File ficheiro = new File(str);
@@ -53,7 +62,7 @@ public class ServerS {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] linha = data.split(" ");
-                if(Objects.equals(linha[1], "DB")) {setdb(linha[2]);}
+                if(Objects.equals(linha[1], "DB")) {setdb(linha[2]);setname(linha[0]);}
                 else if(Objects.equals(linha[1], "SS")) {setss(linha[2]);}
                 else if(Objects.equals(linha[1], "SP")) {setsp(linha[2]);}
                 else if(Objects.equals(linha[1], "DD")) {setdd(linha[2]);}
@@ -68,31 +77,53 @@ public class ServerS {
     }
 
     public static void main(String[] args) throws IOException {
-        String strtxt  = "testSS.txt";
         ServerS servidor = new ServerS();
-        servidor.ParserSs(strtxt);
+        servidor.ParserSs("testSS.txt");
+        Logs log = new Logs();
         Cache cachess = new Cache();
-        cachess.ParserCacheSS("example..txt");
         try {
-            ServerSocket ss = new ServerSocket(4999);
-            while (true) {
-                System.out.println("espera de conexão!!!!!!!!!!!!!!!!!!");
-                Socket s = ss.accept();
-                System.out.println("cliente conectado ao servidor secundario");
+            while(true) {
 
-                InputStreamReader in = new InputStreamReader(s.getInputStream());
-                BufferedReader bf = new BufferedReader(in);
+                if (servidor.refresh == 0) {
+                    ServerSocket servers = new ServerSocket(4999);
+                    Socket socket = new Socket("localHost", 4998);
+                    PrintWriter pr = new PrintWriter((socket.getOutputStream()));
+                    String qu1 = "domain: example.com";
+                    pr.println(qu1);
+                    log.addToFile("ZT " + qu1);
+                    pr.flush();
 
-                String str = bf.readLine();
-                System.out.println("mensagem do cliente: " + str);
 
-                PrintWriter pr = new PrintWriter(s.getOutputStream());
-                pr.println("yes!!");
-                pr.flush();
-                s.close();
+                    InputStreamReader in = new InputStreamReader(socket.getInputStream());
+                    BufferedReader bf = new BufferedReader(in);
+                    int count = Integer.parseInt(bf.readLine());
+
+                    //confirmaçao
+                    PrintWriter pr2 = new PrintWriter(socket.getOutputStream());
+                    pr2.println("ok: " + count);
+                    pr2.flush();
+
+                    //receber todas as linhas
+                    int i = 0;
+                    while (i < count) {
+                        Socket ns = servers.accept();
+                        InputStreamReader in2 = new InputStreamReader(ns.getInputStream());
+                        BufferedReader bf2 = new BufferedReader(in2);
+                        String str = bf2.readLine();
+                        System.out.println(i + ": " + str);
+                        //cachess.ParserPorLinha(str);
+                        i++;
+                        ns.close();
+                    }
+                    servidor.refresh++;
+                    socket.close();
+                    System.out.println("espera de mova transferencia de zona!!!!!!!!!!!!!!!!!!");
+                }
             }
+
         }catch (IOException e){
             System.out.println("!!!!Erro no servidor secundario!!!!");
+            log.addToFile("EZ "+servidor.getname());
             e.printStackTrace();
         }
     }
