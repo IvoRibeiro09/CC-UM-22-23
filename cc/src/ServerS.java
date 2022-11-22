@@ -15,7 +15,6 @@ public class ServerS {
     private String lg;
     private String lgall;
     private String st;
-    private int refresh;
 
     public ServerS(){
         this.name = "";
@@ -26,7 +25,6 @@ public class ServerS {
         this.lg = "";
         this.lgall = "";
         this.st = "";
-        this.refresh = 0;
     }
     public void setname(String s){this.name= s;}
     public void setdb(String s){
@@ -81,41 +79,52 @@ public class ServerS {
         servidor.ParserSs("testSS.txt");
         Logs log = new Logs();
         Cache cachess = new Cache();
+        System.out.println(servidor.getname());
+        cachess.ParserCacheSP(servidor.getname()+".");
+
         try {
+            Socket socket = new Socket("localhost",4998);
+            //Socket sockets = new Socket("localhost",4999);
+            ServerSocket servers = new ServerSocket(4999);
+            int j=0;
             while(true) {
 
-                if (servidor.refresh == 0) {
-                    ServerSocket servers = new ServerSocket(4999);
-                    Socket socket = new Socket("localHost", 4998);
+                if (j == 0) {
+                    j++;
+                    System.out.println("ola");
+                    //ServerSocket servers = new ServerSocket(4998);
+                    System.out.println("ola");
+                    //Socket socket = servers.accept();
                     PrintWriter pr = new PrintWriter((socket.getOutputStream()));
-                    String qu1 = "domain: example.com";
+                    String domain = "example.com";
+                    String qu1 = "domain: "+domain;
                     pr.println(qu1);
                     log.addToFile("ZT " + qu1);
                     pr.flush();
 
-
+                    //Socket socket =servers.accept();
                     InputStreamReader in = new InputStreamReader(socket.getInputStream());
                     BufferedReader bf = new BufferedReader(in);
                     int count = Integer.parseInt(bf.readLine());
 
                     //confirmaçao
+                    //Socket nns = new Socket("loclahost",4998);
                     PrintWriter pr2 = new PrintWriter(socket.getOutputStream());
                     pr2.println("ok: " + count);
                     pr2.flush();
 
                     //receber todas as linhas
                     int i = 0;
+                    Socket sockets = servers.accept();
                     while (i < count) {
-                        Socket ns = servers.accept();
-                        InputStreamReader in2 = new InputStreamReader(ns.getInputStream());
+                        //Socket sockets = servers.accept();
+                        InputStreamReader in2 = new InputStreamReader(sockets.getInputStream());
                         BufferedReader bf2 = new BufferedReader(in2);
                         String str = bf2.readLine();
                         System.out.println(i + ": " + str);
-                        //cachess.ParserPorLinha(str);
+                        cachess.ParserPorLinha(str,domain+".");
                         i++;
-                        ns.close();
                     }
-                    servidor.refresh++;
                     socket.close();
                     System.out.println("espera de mova transferencia de zona!!!!!!!!!!!!!!!!!!");
                 }

@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.File;
 import java.util.*;
 
@@ -13,6 +14,7 @@ public class Cache {
     private String soaexpire;
     private HashMap<String,String> allva;
      private HashMap<String,String> ns;
+     private HashMap<String,String > smalers;
      private HashMap<String,String> mx;
      private HashMap<String,String> Aips;
     private HashMap<String,String> cnames;
@@ -30,6 +32,7 @@ public class Cache {
         this.soaexpire = "";
         this.allva = new HashMap<>();
         this.ns = new HashMap<>();
+        this.smalers = new HashMap<>();
         this.mx = new HashMap<>();
         this.Aips = new HashMap<>();
         this.cnames = new HashMap<>();
@@ -64,8 +67,8 @@ public class Cache {
     public void setAllva(String key,String value){
         this.allva.put(value,key);
     }
-    public void setAllvaMap(HashMap<String ,String> hash){
-        this.allva= hash;
+    public void setSmalers(String key,String value){
+        this.smalers.put(key,value);
     }
     public void setNs(String key,String value){
         this.ns.put(key,value);
@@ -99,21 +102,23 @@ public class Cache {
     public HashMap<String,String> getAIps(){
         return Aips;
     }
+    public String getSoaexpire() {
+        return this.soaexpire;
+    }
+    public int getNumeberOfLinesSP() {
+        return this.lines;
+    }
+    /*
     private HashMap<String, String> getCnames() {
         return this.cnames;
     }
     private HashMap<String, String> getMx() {
         return this.mx;
     }
-    private HashMap<String, String> getNs() {
+    public HashMap<String, String> getNs() {
         return this.ns;
     }
-    public int getNumeberOfLinesSP() {
-        return this.lines;
-    }
-    private String getSoaexpire() {
-        return this.soaexpire;
-    }
+
     private String getSoaretry() {
         return this.soaretry;
     }
@@ -123,23 +128,26 @@ public class Cache {
     private String getSoaserial() {
         return this.soaserial;
     }
-    private String getSoaadmin() {
+    public String getSoaadmin() {
         return this.soaadmin;
     }
     private String getSoasp() {
         return this.soasp;
     }
 
+     */
+
 
     public boolean ParserCacheSP(String str){
         try {
-            String strfile = str +"db";
+            String strfile = str + "db";
             File ficheiro = new File(strfile);
             Scanner myReader = new Scanner(ficheiro);
 
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                ParserPorLinha(data);
+                System.out.println(data);
+                ParserPorLinha(data,str);
             }
             return true;
         } catch (Exception e) {
@@ -148,19 +156,20 @@ public class Cache {
         }
     }
 
-    public void ParserPorLinha(String str) {
-
+    public void ParserPorLinha(String str,String dominio) {
         String[] linha = str.split(" ");
         if (!Objects.equals(linha[0], "#")) {
-            if (Objects.equals(linha[0], "@")) {
+            if (Objects.equals(linha[0], dominio) || Objects.equals(linha[0],"@")) {
                 if (Objects.equals(linha[1], "DEFAULT")) {
                     setdfault(linha[2]);
+                    if(Objects.equals(linha[0],dominio))setttl(linha[3]);
                 } else if (Objects.equals(linha[1], "SOASP")) {
                     setsoasp(linha[2]);
                     incLines();
                     setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
                 } else if (Objects.equals(linha[1], "SOAADMIN")) {
                     setsoaadmin(linha[2]);
+                    System.out.println(linha[2]);
                     incLines();
                     setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
                 } else if (Objects.equals(linha[1], "SOASERIAL")) {
@@ -197,12 +206,12 @@ public class Cache {
                     incLines();
                     setAllLines(getDfault()+" "+linha[1]+" "+linha[2]);
                 }
-            } else if (Objects.equals(linha[0], "TTL")) {
+            }else if (Objects.equals(linha[0], "TTL")) {
                 setttl(linha[2]);
             }else if (Objects.equals(linha[0],"Smaller.@")){
-                setAllva(linha[1], linha[2]);
+                setSmalers(linha[1], linha[2]);
                 incLines();
-                setAllLines(getDfault()+" "+linha[1]+" "+linha[2]);
+                setAllLines("Smaller.@ "+linha[1]+" "+linha[2]);
             } else if (Objects.equals(linha[1], "A") && Objects.equals(linha[0], "www")) {
                 String aux = linha[2] + " " + linha[4];
                 setAips(linha[0], aux);

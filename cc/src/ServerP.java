@@ -120,22 +120,27 @@ public class ServerP {
                     pr2.println(i);
                     pr2.flush();
 
+
                     //receber confirmaçao do numero de linhas
+                    //ss.accept();
                     InputStreamReader in2 = new InputStreamReader(s.getInputStream());
                     BufferedReader bf2 = new BufferedReader(in2);
                     String str2 = bf2.readLine();
                     System.out.println("o servidor secundario aceita receber "+str2+" linha");
 
                     //enviar linha por linha a cache do sp
+                    Socket ns = new Socket("localhost",4999);
                     while(i>j){
-                        Socket socket = new Socket("localHost",4999);
+                        //Socket ns = new Socket("Localhost",4999);
                         String aux2 = ca.getCacheLine(j);
-                        PrintWriter pr3 = new PrintWriter(socket.getOutputStream());
+                        PrintWriter pr3 = new PrintWriter(ns.getOutputStream());
                         pr3.println(aux2);
                         System.out.println(j+": "+aux2);
                         pr3.flush();
                         j++;
+                        //ns.close();
                     }
+                    ns.close();
                     s.close();
                 }
                 s.close();

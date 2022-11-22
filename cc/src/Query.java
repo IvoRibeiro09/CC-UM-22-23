@@ -145,6 +145,4 @@ public class Query {
             return ls.toString();
         }
     }
-
-
 }

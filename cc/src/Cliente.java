@@ -37,7 +37,8 @@ public class Cliente {
         }catch (IOException e){
             System.out.println("!!!!Erro no cliente ao conector ao ServidorP!!!!");
             e.printStackTrace();
-        }/*
+        }
+        /*
         try {
             Socket s1 = new Socket("localhost", 4999);
 
