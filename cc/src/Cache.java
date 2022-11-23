@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Cache {
@@ -21,7 +22,7 @@ public class Cache {
     private int lines ;
     private ArrayList<String> AllLines;
 
-
+    //construtor vazio
     public Cache(){
         this.dfault = "";
         this.ttl = "";
@@ -39,7 +40,7 @@ public class Cache {
         this.lines = 0;
         this.AllLines = new ArrayList<String>();
     }
-
+    //seters
     public void setdfault(String s){
         this.dfault = s;
     }
@@ -89,7 +90,7 @@ public class Cache {
         this.lines++;
     }
 
-
+    //geters
     public String getDfault(){
         return this.dfault;
     }
@@ -108,51 +109,27 @@ public class Cache {
     public int getNumeberOfLinesSP() {
         return this.lines;
     }
-    /*
-    private HashMap<String, String> getCnames() {
-        return this.cnames;
-    }
-    private HashMap<String, String> getMx() {
-        return this.mx;
-    }
-    public HashMap<String, String> getNs() {
-        return this.ns;
+    public String getCacheLine(int i){
+        return AllLines.get(i);
     }
 
-    private String getSoaretry() {
-        return this.soaretry;
-    }
-    private String getSoarefresh() {
-        return this.soarefresh;
-    }
-    private String getSoaserial() {
-        return this.soaserial;
-    }
-    public String getSoaadmin() {
-        return this.soaadmin;
-    }
-    private String getSoasp() {
-        return this.soasp;
-    }
-
-     */
-
-
-    public boolean ParserCacheSP(String str){
+    //parser de ficheiros de base de dados de servidores
+    public void ParserCacheServer(String str) throws IOException {
+        Logs log = new Logs();
         try {
-            String strfile = str + "db";
+            String strfile = str + ".db";
             File ficheiro = new File(strfile);
             Scanner myReader = new Scanner(ficheiro);
 
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                System.out.println(data);
                 ParserPorLinha(data,str);
             }
-            return true;
+            //ocorreu sem erros
+            log.addEV("bd",str);
         } catch (Exception e) {
-            System.out.println("!!!!Erro no parse do ficheiro de Base de Dados!!!!");
-            return false;
+            //erro
+            log.addFL(str,"!!!!Erro no parse do ficheiro de Base de Dados!!!!");
         }
     }
 
@@ -169,7 +146,6 @@ public class Cache {
                     setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
                 } else if (Objects.equals(linha[1], "SOAADMIN")) {
                     setsoaadmin(linha[2]);
-                    System.out.println(linha[2]);
                     incLines();
                     setAllLines(getDfault()+" "+linha[1]+" "+linha[2]+" "+getTtl());
                 } else if (Objects.equals(linha[1], "SOASERIAL")) {
@@ -227,9 +203,5 @@ public class Cache {
                 setAllLines(linha[0]+"."+getDfault()+" "+linha[1]+" "+linha[2]+"."+getDfault()+" "+getTtl());
             }
         }
-    }
-
-    public String getCacheLine(int i){
-        return AllLines.get(i);
     }
 }

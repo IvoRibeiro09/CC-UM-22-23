@@ -12,6 +12,7 @@ public class Query {
     private String InfoName;
     private String Type;
 
+    //construtor vazio
     public Query(){
         //header Info
         this.ID = "";
@@ -24,7 +25,7 @@ public class Query {
         this.InfoName = "";
         this.Type ="";
     }
-
+    //seters
     public void setID(String s){
         this.ID = s;
     }
@@ -49,7 +50,11 @@ public class Query {
     public void setType(String s){
         this.Type = s;
     }
-    private void ParserQuery(String data)  {
+
+    //funçao que parte a informaçao da query feita pelo cliente
+    // e guarda essa informaçao para posterior uso
+    private void ParserQuery(String data) throws IOException {
+        Logs log = new Logs();
         try{
             String[] parte = data.split(";");
             String[] priParte = parte[0].split(",");
@@ -63,15 +68,8 @@ public class Query {
             setInfoName(segParte[0]);
             setType(segParte[1]);
         }catch(Exception e){
-            String[] id = data.split(",",1);
-            setID(id[0]);
-            setFlags("");
             setnResponse("3");
-            setnValues("0");
-            setnAutho("0");
-            setnExtravalues("0");
-            setInfoName("");
-            setType("");
+            log.addFL("mensagem do cliente","mal escrita");
         }
     }
     public String getId(){
@@ -95,6 +93,7 @@ public class Query {
         StringBuilder ev = new StringBuilder();
         List<String> listas = new ArrayList<>();
         Set<String> chaves = ca.getAllva().keySet();
+
 
         if (!Objects.equals(ca.getDfault(), nomedominio)) error2++;
         else {
