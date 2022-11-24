@@ -1,0 +1,6 @@
+17:11:2022.11:37:57:076 QE 10.0.0.1 3874,Q+R,0,0,0,0;example.com.,MX;
+17:11:2022.11:37:57:117 QR 193.123.5.189 3874,Q+R,0,0,0,0;example.com.,MX;
+17:11:2022.11:37:57:125 RR 193.123.5.189 3874,R+A,0,2,3,5;example.com.,MX;example.com. MX mx1.example.com 86400 10,example.com. MX mx2.example.com 86400 20;example.com. NS ns1.example.com. 86400,example.com. NS ns2.example.com. 86400,example.com. NS ns3.example.com. 86400;ns2.example.com. A 193.137.100.250 86400,ns3.example.com. A 193.136.130.251 86400,mx2.example.com. A 193.136.130.201 86400,mx1.example.com. A 193.136.130.200 86400,ns1.example.com. A 193.136.130.250 86400;
+17:11:2022.11:37:57:127 RP 10.0.0.1 3874,R+A,0,2,3,5;example.com.,MX;example.com. MX mx1.example.com 86400 10,example.com. MX mx2.example.com 86400 20;example.com. NS ns1.example.com. 86400,example.com. NS ns2.example.com. 86400,example.com. NS ns3.example.com. 86400;ns2.example.com. A 193.137.100.250 86400,ns3.example.com. A 193.136.130.251 86400,mx2.example.com. A 193.136.130.201 86400,mx1.example.com. A 193.136.130.200 86400,ns1.example.com. A 193.136.130.250 86400;
+17:11:2022.11:48:38:190 QE 10.0.0.1 3874,Q+R,0,0,0,0;example.com.,;
+17:11:2022.11:48:38:236 QR 193.123.5.189 3874,Q+R,0,0,0,0;example.com.,;
