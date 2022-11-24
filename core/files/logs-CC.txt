@@ -1,0 +1,15 @@
+Data: 24:11:2022.23:30:06:240 Type:EV @ conf-file-read on:files/SP.robalo.txt
+Data: 24:11:2022.23:30:06:468 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.23:30:06:468 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.23:30:14:435 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 24:11:2022.23:30:14:684 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.23:30:14:684 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 24:11:2022.23:30:14:867 Type:ZT IP:10.0.16.11 Data:SS
+Data: 24:11:2022.23:36:00:981 Type:QE IP:10.0.14.10 Data:3874,Q+R,0,0,0,0;robalo.moc.,MX;
+Data: 24:11:2022.23:36:01:004 Type:QR IP:10.0.28.20 Data:3874,Q+R,0,0,0,0;robalo.moc.,MX;
+Data: 24:11:2022.23:36:01:005 Type:RP IP:10.0.28.20 Data:3874,R+A,0,2,3,5;robalo.moc.,MX;robalo.moc. MX mx1.robalo.moc. 86400 10,robalo.moc. MX mx2.robalo.moc. 86400 20;robalo.moc. NS ns3.robalo.moc. 86400,robalo.moc. NS SP.robalo.moc. 86400,robalo.moc. NS ns2.robalo.moc. 86400;mx1.robalo.moc. A null 86400,mx2.robalo.moc. A null 86400,ns3.robalo.moc. A null 86400,SP.robalo.moc. A 10.0.16.11 86400,ns2.robalo.moc. A 193.137.100.250 86400;
+Data: 24:11:2022.23:36:01:020 Type:RR IP:10.0.14.10 Data:3874,R+A,0,2,3,5;robalo.moc.,MX;robalo.moc. MX mx1.robalo.moc. 86400 10,robalo.moc. MX mx2.robalo.moc. 86400 20;robalo.moc. NS ns3.robalo.moc. 86400,robalo.moc. NS SP.robalo.moc. 86400,robalo.moc. NS ns2.robalo.moc. 86400;mx1.robalo.moc. A null 86400,mx2.robalo.moc. A null 86400,ns3.robalo.moc. A null 86400,SP.robalo.moc. A 10.0.16.11 86400,ns2.robalo.moc. A 193.137.100.250 86400;
+Data: 24:11:2022.23:39:58:736 Type:QE IP:10.0.16.11 Data:3874,Q+R,0,0,0,0;robalo.moc.,MX;
+Data: 24:11:2022.23:39:58:770 Type:QR IP:10.0.28.20 Data:3874,Q+R,0,0,0,0;robalo.moc.,MX;
+Data: 24:11:2022.23:39:58:771 Type:RP IP:10.0.28.20 Data:3874,R+A,0,2,3,5;robalo.moc.,MX;robalo.moc. MX mx1.robalo.moc. 86400 10,robalo.moc. MX mx2.robalo.moc. 86400 20;robalo.moc. NS ns3.robalo.moc. 86400,robalo.moc. NS SP.robalo.moc. 86400,robalo.moc. NS ns2.robalo.moc. 86400;mx1.robalo.moc. A 193.136.130.200 86400,mx2.robalo.moc. A 193.136.130.201 86400,ns3.robalo.moc. A 193.136.130.251 86400,SP.robalo.moc. A 10.0.16.11 86400,ns2.robalo.moc. A 193.137.100.250 86400;
+Data: 24:11:2022.23:39:58:787 Type:RR IP:10.0.16.11 Data:3874,R+A,0,2,3,5;robalo.moc.,MX;robalo.moc. MX mx1.robalo.moc. 86400 10,robalo.moc. MX mx2.robalo.moc. 86400 20;robalo.moc. NS ns3.robalo.moc. 86400,robalo.moc. NS SP.robalo.moc. 86400,robalo.moc. NS ns2.robalo.moc. 86400;mx1.robalo.moc. A 193.136.130.200 86400,mx2.robalo.moc. A 193.136.130.201 86400,ns3.robalo.moc. A 193.136.130.251 86400,SP.robalo.moc. A 10.0.16.11 86400,ns2.robalo.moc. A 193.137.100.250 86400;
