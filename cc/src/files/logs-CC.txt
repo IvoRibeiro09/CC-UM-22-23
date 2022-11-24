@@ -1,0 +1,92 @@
+Data: 24:11:2022.18:53:37:378 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.18:53:37:589 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.18:53:37:589 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.18:53:48:421 Type:QE IP:10.0.0.1 Data:3874,Q+R,0,0,0,0;example.com.,MX;
+Data: 24:11:2022.18:53:48:448 Type:QR IP:10.0.4.10 Data:3874,Q+R,0,0,0,0;example.com.,MX;
+Data: 24:11:2022.18:53:48:454 Type:RP IP:10.0.4.10 Data:3874,R+A,2,0,0,0;example.com.,MX;
+Data: 24:11:2022.18:53:48:456 Type:RR IP:10.0.0.1 Data:3874,R+A,2,0,0,0;example.com.,MX;
+Data: 24:11:2022.18:57:35:540 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.18:57:35:775 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.18:57:35:776 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.18:57:39:316 Type:FL IP:10.0.0.1 erro:!!!!Erro no cliente ao conector ao ServidorP!!!!
+Data: 24:11:2022.18:59:21:650 Type:FL IP:10.0.0.1 erro:!!!!Erro no cliente ao conector ao ServidorP!!!!
+Data: 24:11:2022.19:01:36:588 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:01:36:818 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:01:36:818 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:01:40:932 Type:FL IP:10.0.0.1 erro:!!!!Erro no cliente ao conector ao ServidorP!!!!
+Data: 24:11:2022.19:06:23:907 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:06:24:128 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:06:24:128 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:06:27:808 Type:FL IP:10.0.0.1 erro:!!!!Erro no cliente ao conector ao ServidorP!!!!
+Data: 24:11:2022.19:10:32:671 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:10:32:896 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:10:32:896 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:10:37:359 Type:QE IP:10.0.0.1 Data:3874,Q+R,0,0,0,0;boi.,MX;
+Data: 24:11:2022.19:10:37:379 Type:QR IP:10.0.4.10 Data:3874,Q+R,0,0,0,0;boi.,MX;
+Data: 24:11:2022.19:10:37:380 Type:RP IP:10.0.4.10 Data:3874,R+A,2,0,0,0;boi.,MX;
+Data: 24:11:2022.19:10:37:388 Type:RR IP:10.0.0.1 Data:3874,R+A,2,0,0,0;boi.,MX;
+Data: 24:11:2022.19:13:36:520 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:13:36:778 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:13:36:778 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:13:40:545 Type:QE IP:10.0.0.1 Data:3874,Q+R,0,0,0,0;robalo.moc.,MX;
+Data: 24:11:2022.19:13:40:566 Type:QR IP:10.0.4.10 Data:3874,Q+R,0,0,0,0;robalo.moc.,MX;
+Data: 24:11:2022.19:13:40:567 Type:RP IP:10.0.4.10 Data:3874,R+A,0,2,3,5;robalo.moc.,MX;robalo.moc. MX mx1.robalo.moc. 86400 10,robalo.moc. MX mx2.robalo.moc. 86400 20;robalo.moc. NS ns3.robalo.moc. 86400,robalo.moc. NS SP.robalo.moc. 86400,robalo.moc. NS ns2.robalo.moc. 86400;mx1.robalo.moc. A 193.136.130.200 86400,mx2.robalo.moc. A 193.136.130.201 86400,ns3.robalo.moc. A 193.136.130.251 86400,SP.robalo.moc. A 10.0.16.11 86400,ns2.robalo.moc. A 193.137.100.250 86400;
+Data: 24:11:2022.19:13:40:576 Type:RR IP:10.0.0.1 Data:3874,R+A,0,2,3,5;robalo.moc.,MX;robalo.moc. MX mx1.robalo.moc. 86400 10,robalo.moc. MX mx2.robalo.moc. 86400 20;robalo.moc. NS ns3.robalo.moc. 86400,robalo.moc. NS SP.robalo.moc. 86400,robalo.moc. NS ns2.robalo.moc. 86400;mx1.robalo.moc. A 193.136.130.200 86400,mx2.robalo.moc. A 193.136.130.201 86400,ns3.robalo.moc. A 193.136.130.251 86400,SP.robalo.moc. A 10.0.16.11 86400,ns2.robalo.moc. A 193.137.100.250 86400;
+Data: 24:11:2022.19:19:02:003 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:19:02:262 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:19:02:266 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:19:13:422 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 24:11:2022.19:19:13:652 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:19:13:656 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 24:11:2022.19:19:23:763 Type:FL IP:10.0.0.1 erro:!!!!Erro no cliente ao conector ao ServidorP!!!!
+Data: 24:11:2022.19:21:07:108 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:21:07:358 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:21:07:363 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:21:15:862 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 24:11:2022.19:21:16:116 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:21:16:129 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 24:11:2022.19:24:39:522 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:24:39:746 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:24:39:746 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:24:47:494 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 24:11:2022.19:24:47:705 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:24:47:706 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 24:11:2022.19:55:40:889 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:55:41:131 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:55:41:131 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:55:47:568 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 24:11:2022.19:55:47:798 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:55:47:798 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 24:11:2022.19:55:50:924 Type:EZ IP:10.0.4.10 Data:comunicação entre servidor secundario e servidor primario
+Data: 24:11:2022.19:56:00:854 Type:QE IP:10.0.0.1 Data:3874,Q+R,0,0,0,0;robalo.moc.,MX;
+Data: 24:11:2022.19:57:34:719 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:57:34:977 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:57:34:978 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:59:00:912 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.19:59:01:147 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:59:01:147 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.19:59:05:175 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 24:11:2022.19:59:05:396 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.19:59:05:396 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 24:11:2022.19:59:08:523 Type:EZ IP:10.0.4.10 Data:comunicação entre servidor secundario e servidor primario
+Data: 24:11:2022.20:12:51:471 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.20:12:51:688 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.20:12:51:688 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.20:12:57:863 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 24:11:2022.20:12:58:082 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.20:12:58:083 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 24:11:2022.20:13:01:226 Type:EZ IP:10.0.4.10 Data:comunicação entre servidor secundario e servidor primario
+Data: 24:11:2022.20:18:44:709 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.20:18:44:978 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.20:18:44:986 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.20:18:50:758 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 24:11:2022.20:18:51:074 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.20:18:51:079 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 24:11:2022.20:18:54:286 Type:EZ IP:10.0.4.10 Data:comunicação entre servidor secundario e servidor primario
+Data: 24:11:2022.20:23:29:422 Type:EV @ conf-file-read on:SP.robalo.txt
+Data: 24:11:2022.20:23:29:705 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.20:23:29:705 Type:EV @ db-file-read on:files/SP.robalo.moc.db
+Data: 24:11:2022.20:23:31:812 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 24:11:2022.20:23:32:107 Type:EV @ db-file-read on:robalo.moc.
+Data: 24:11:2022.20:23:32:107 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 24:11:2022.20:23:35:240 Type:EZ IP:10.0.4.10 Data:comunicação entre servidor secundario e servidor primario

@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -114,10 +113,12 @@ public class Cache {
     }
 
     //parser de ficheiros de base de dados de servidores
-    public void ParserCacheServer(String str) throws IOException {
+    public void ParserCacheServer(String strfile) throws IOException {
         Logs log = new Logs();
+        String[] aux = strfile.split("\\.");
+        String str = aux[1]+"."+aux[2]+"."; // dominio para confirmar;
+
         try {
-            String strfile = str + ".db";
             File ficheiro = new File(strfile);
             Scanner myReader = new Scanner(ficheiro);
 

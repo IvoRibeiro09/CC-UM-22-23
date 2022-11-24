@@ -51,7 +51,7 @@ public class Logs {
     public void addToFile(String conteudo) throws IOException,FileNotFoundException {
 
         try {
-            FileWriter fW = new FileWriter("logs-CC.txt",true);
+            FileWriter fW = new FileWriter("files/logs-CC.txt",true);
             PrintWriter pW = new PrintWriter(fW);
             String s ="Data: "+getDataHora() + conteudo;
             pW.println(s);
