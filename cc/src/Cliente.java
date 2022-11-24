@@ -19,19 +19,16 @@ public class Cliente {
         Cliente cliente = new Cliente();
         Logs log = new Logs();
 
-        String servernamesp = "10.0.16.11";
-        String servernamess = "10.0.14.10";
+        String servername = "10.0.16.11";
         try {
-            Socket s = new Socket("localhost", 12346);//para o servidor ss no ide
-            //Socket s = new Socket("localhost", 12345);//para o servidor sp no ide
-            //Socket s = new Socket(servernamesp, 12345);//para o servidor sp no core
-            //Socket s = new Socket(servernamess, 12346);//para o servidor sp no core
+            //Socket s = new Socket("localhost", 4997);//para o servidor ss
+            //Socket s = new Socket("localhost", 12345);//para o servidor sp
+		Socket s = new Socket(servername, 12345);//para o servidor sp
 
 
             PrintWriter pr = new PrintWriter((s.getOutputStream()));
             String qu1 = "3874,Q+R,0,0,0,0;example.com.,MX;";
             pr.println("QE " + qu1);
-            System.out.println("cliente enviou: " + qu1);
             log.addQE(cliente.getIP(), qu1);
             pr.flush();
 
@@ -40,7 +37,7 @@ public class Cliente {
             InputStreamReader in = new InputStreamReader(s.getInputStream());
             BufferedReader bf = new BufferedReader(in);
             String str = bf.readLine();
-            System.out.println("cliente recebeu: " + str);
+            //System.out.println("cliente recebeu: " + str);
             log.addRR(cliente.getIP(), str);
 
         }catch (IOException e){
