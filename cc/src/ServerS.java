@@ -78,7 +78,7 @@ public class ServerS {
     public static void main(String[] args) throws IOException {
         Logs log = new Logs();
         ServerS servidor = new ServerS();
-        String configfile = "files/SS.robalo.txt";
+        String configfile = "cc/SS.robalo.txt";
         servidor.ParserSs(configfile);
         log.addEV("config",configfile);//leu o ficheiro de configuração
         Cache cachess = new Cache();
@@ -86,7 +86,7 @@ public class ServerS {
         log.addEV("bd",servidor.getDb());//leu o ficheiro de base de dados
         //conexoes
         ServerSocket servercliente = new ServerSocket(12346);
-        ServerSocket servers = new ServerSocket(12347);
+        //ServerSocket servers = new ServerSocket(12347);
 
         try{
             System.out.println("comecei uma transferencia de zona");
@@ -107,20 +107,22 @@ public class ServerS {
             PrintWriter pr2 = new PrintWriter(socket.getOutputStream());
             pr2.println("ok: " + count);
             pr2.flush();
-            socket.close();
+            //socket.close();
             System.out.println("confirmei que estou apto a receber as "+count+" linhas");
 
             //receber todas as linhas
             int i = 0;
             while (i < count) {
-                Socket sockets = servers.accept();
-                InputStreamReader in2 = new InputStreamReader(sockets.getInputStream());
+                //Socket sockets = servers.accept();
+
+                InputStreamReader in2 = new InputStreamReader(socket.getInputStream());
                 BufferedReader bf2 = new BufferedReader(in2);
                 String str = bf2.readLine();
                 cachess.ParserPorLinha(str, servidor.getDominio());
                 i++;
-                sockets.close();
+                //sockets.close();
             }
+            socket.close();
             System.out.println("servidor secundario recebeu as "+i+" linhas");
             log.addZT(servidor.getSP(), "SS");
             System.out.println("espera de mova transferencia de zona!!!!!!!!!!!!!!!!!!");

@@ -21,6 +21,7 @@ public class Cliente {
 
         String servernamesp = "10.0.16.11";
         String servernamess = "10.0.14.10";
+
         try {
             //Socket s = new Socket("localhost", 12346);//para o servidor ss no ide
             //Socket s = new Socket("localhost", 12345);//para o servidor sp no ide

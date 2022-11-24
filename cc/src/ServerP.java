@@ -1,5 +1,4 @@
 import java.io.*;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -58,7 +57,7 @@ public class ServerP {
     public void ParserSp( String str) throws IOException {
         Logs log = new Logs();
         try {
-            File ficheiro = new File("files/SP.robalo.txt");
+            File ficheiro = new File("cc/SP.robalo.txt");
             Scanner myReader = new Scanner(ficheiro);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -82,7 +81,7 @@ public class ServerP {
         ServerP sp = new ServerP();
         Logs log = new Logs();
         Cache ca = new Cache();
-        String configfile = "SP.robalo.txt";
+        String configfile = "cc/SP.robalo.txt";
         sp.ParserSp(configfile);
         log.addEV("config",configfile);//leu o ficheiro de configuração
         ca.ParserCacheServer(sp.getDb());
@@ -96,6 +95,7 @@ public class ServerP {
 
                 Socket s = ss.accept();
                 //recebe uma conexao, que vem com um header
+                System.out.println("alguma coisa foi conectada");
                 InputStreamReader in = new InputStreamReader(s.getInputStream());
                 BufferedReader bf = new BufferedReader(in);
                 String str = bf.readLine();
@@ -144,15 +144,16 @@ public class ServerP {
 
                         //enviar linha por linha a cache do sp
                         //Socket ns = new Socket("localhost",4999);
+                        //Socket ns = new Socket("Localhost", 12347);
                         while (i > j) {
-                            //Socket ns = new Socket("Localhost", 12347); // no ide
-                            Socket ns = new Socket(sp.get1SS(), 12347); //no core
+                           // Socket ns = new Socket("Localhost", 12347); // no ide
+                            //Socket ns = new Socket(sp.get1SS(), 12347); //no core
                             String aux2 = ca.getCacheLine(j);
-                            PrintWriter pr3 = new PrintWriter(ns.getOutputStream());
+                            PrintWriter pr3 = new PrintWriter(s.getOutputStream());
                             pr3.println(aux2);
                             pr3.flush();
                             j++;
-
+                            sleep(0,3);
                         }
                         System.out.println("o servidor primario enviou as "+j+" linhas");
                         s.close();
