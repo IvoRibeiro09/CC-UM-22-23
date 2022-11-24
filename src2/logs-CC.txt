@@ -4,3 +4,15 @@
 17:11:2022.11:37:57:127 RP 10.0.0.1 3874,R+A,0,2,3,5;example.com.,MX;example.com. MX mx1.example.com 86400 10,example.com. MX mx2.example.com 86400 20;example.com. NS ns1.example.com. 86400,example.com. NS ns2.example.com. 86400,example.com. NS ns3.example.com. 86400;ns2.example.com. A 193.137.100.250 86400,ns3.example.com. A 193.136.130.251 86400,mx2.example.com. A 193.136.130.201 86400,mx1.example.com. A 193.136.130.200 86400,ns1.example.com. A 193.136.130.250 86400;
 17:11:2022.11:48:38:190 QE 10.0.0.1 3874,Q+R,0,0,0,0;example.com.,;
 17:11:2022.11:48:38:236 QR 193.123.5.189 3874,Q+R,0,0,0,0;example.com.,;
+Data: 24:11:2022.12:30:56:792 Type:EV @ conf-file-read on:test.txt
+Data: 24:11:2022.12:30:56:859 Type:FL IP:example.com erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 24:11:2022.12:30:56:880 Type:EV @ db-file-read on:example.com.db
+Data: 24:11:2022.12:32:08:107 Type:EV @ conf-file-read on:test.txt
+Data: 24:11:2022.12:32:08:174 Type:FL IP:example.com erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 24:11:2022.12:32:08:177 Type:EV @ db-file-read on:example.com.db
+Data: 24:11:2022.12:32:17:778 Type:FL IP:10.0.0.1 erro:!!!!Erro no cliente ao conector ao ServidorP!!!!
+Data: 24:11:2022.12:34:20:683 Type:QE IP:10.0.0.1 Data:3874,Q+R,0,0,0,0;example.com.,MX;
+Data: 24:11:2022.12:34:20:721 Type:QR IP:193.123.5.189 Data:3874,Q+R,0,0,0,0;example.com.,MX;
+Data: 24:11:2022.12:34:20:723 Type:RP IP:193.123.5.189 Data:3874,R+A,2,0,0,0;example.com.,MX;
+Data: 24:11:2022.12:34:20:723 Type:RP IP:193.123.5.189 Data:3874,R+A,2,0,0,0;example.com.,MX;
+Data: 24:11:2022.12:34:20:732 Type:RR IP:10.0.0.1 Data:3874,R+A,2,0,0,0;example.com.,MX;

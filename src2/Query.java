@@ -1,5 +1,3 @@
-package cc.src;
-
 import java.io.IOException;
 import java.util.*;
 

@@ -1,5 +1,3 @@
-package cc.src;
-
 import javax.management.StringValueExp;
 import java.io.*;
 import java.net.InetAddress;
@@ -95,7 +93,7 @@ public class ServerP {
         log.addEV("bd",sp.getname()+".db");//leu o ficheiro de base de dados
 
         try {
-            ServerSocket ss = new ServerSocket(123456); //conexão
+            ServerSocket ss = new ServerSocket(12345); //conexão
 
             while(true) {
                 System.out.println("espera de conexão!!!!!!!!!!!!!!!!!!");

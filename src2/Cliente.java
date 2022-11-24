@@ -1,5 +1,3 @@
-package cc.src;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,10 +19,11 @@ public class Cliente {
         Cliente cliente = new Cliente();
         Logs log = new Logs();
 
-        String servername = "193.136.130.200";
+        String servername = "10.0.16.11";
         try {
             //Socket s = new Socket("localhost", 4997);//para o servidor ss
-            Socket s = new Socket("localhost", 123456);//para o servidor sp
+            //Socket s = new Socket("localhost", 12345);//para o servidor sp
+		Socket s = new Socket(servername, 12345);//para o servidor sp
 
 
             PrintWriter pr = new PrintWriter((s.getOutputStream()));
