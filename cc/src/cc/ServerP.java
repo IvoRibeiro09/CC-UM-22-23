@@ -3,6 +3,7 @@ package cc;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static java.lang.Thread.sleep;
 
@@ -14,9 +15,9 @@ public class ServerP {
     private String lg;
     private String lgall;
     private String st;
-    private ServerSocket ss;
-    private DatagramSocket dsocket;
-    private byte[] buffer = new byte[255];
+    private final ServerSocket ss;
+    private final DatagramSocket dsocket;
+    private byte[] buffer = new byte[550];
 
     //construtor vazio de um servidor principal
     public ServerP(DatagramSocket dsocket,ServerSocket ss) {
@@ -101,8 +102,7 @@ public class ServerP {
             e.printStackTrace();
         }
     }
-    public void clineteServer(Query q,Cache ca) {
-
+    public void clienteServer(Query q,Cache ca) {
         while (true) {
             System.out.println("!!!!!!!!!! espera conexão de um cliente !!!!!!!!!!!!!!");
             try {
@@ -114,6 +114,7 @@ public class ServerP {
                 String query = new String(dp.getData(),0,dp.getLength());
                 System.out.println("query recebida: " + query);
 
+                buffer = new byte[64000];
                 String querydone = q.doQuery(query,ca);
                 buffer = querydone.getBytes();
                 dp = new DatagramPacket(buffer,buffer.length,ClienteIp,porta);
@@ -128,57 +129,58 @@ public class ServerP {
     }
 
     public void servidorservidor(Cache ca){
+        while(true){
+            System.out.println("!!!!!!!!!! espera conexão de um servidor !!!!!!!!!!!!!!");
+            try{
+                Socket socket = ss.accept();
+                System.out.println("um servidor foi conectado ao servidor principal");
+                DataInputStream in = new DataInputStream(socket.getInputStream()); //leitores
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());//escritor
 
-        System.out.println("!!!!!!!!!! espera conexão de um servidor !!!!!!!!!!!!!!");
-        try{
-            Socket socket = ss.accept();
-            System.out.println("um servidor foi conectado ao servidor principal");
-            DataInputStream in = new DataInputStream(socket.getInputStream()); //leitores
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());//escritor
+                String str = in.readUTF();
+                System.out.println(str);
+                String[] aux = str.split(" ");
+                if (Objects.equals(aux[0], "domain:")) {
+                    System.out.println("servidorS é do mesmo dominio que o ServerP");
+                    //conta toda a informaçao que tem guardada na sua cache
+                    int i = 0, j = 0;
+                    if (Objects.equals(aux[1], getDominio())) {
+                        i = ca.getNumeberOfLinesSP();
+                    }
+                    //envia mensagem ao ServerS com o numero de linhas que ira enviar
+                    out.writeInt(i);
+                    System.out.println("o servidorP enviou a msg: " + i);
 
-            String str = in.readUTF();
-            System.out.println(str);
-            String[] aux = str.split(" ");
-            if (Objects.equals(aux[0], "domain:")) {
-                System.out.println("servidorS é do mesmo dominio que o ServerP");
-                //conta toda a informaçao que tem guardada na sua cache
-                int i = 0, j = 0;
-                if (Objects.equals(aux[1], getDominio())) {
-                    i = ca.getNumeberOfLinesSP();
+                    //recebe a confirmaçao que o ServerS aceita receber o numero de linhas indicado
+                    String str2 = in.readUTF();
+                    System.out.println("o servidor secundario aceita receber " + str2 + " linha");
+
+                    //envia a informaçao presente na base de dados linha a linha
+                    while (i > j) {
+
+                        String linha = ca.getCacheLine(j);
+                        out.writeUTF(linha);
+                        System.out.println("linha "+j+": "+linha);
+                        j++;
+                    }
+                    System.out.println("o servidor primario enviou as " + (j+1) + " linhas");
+                    socket.close(); //fecha a conexao
+                    //fecha leitores e escritores
+                    in.close();
+                    out.close();
+                }else{
+                    out.writeUTF("Nao pertences a este Dominio!!!!");
+                    socket.close(); //fecha a conexao
+                    //fecha leitores e escritores
+                    in.close();
+                    out.close();
                 }
-                //envia mensagem ao ServerS com o numero de linhas que ira enviar
-                out.writeInt(i);
-                System.out.println("o servidorP enviou a msg: " + i);
-
-                //recebe a confirmaçao que o ServerS aceita receber o numero de linhas indicado
-                String str2 = in.readUTF();
-                System.out.println("o servidor secundario aceita receber " + str2 + " linha");
-
-                //envia a informaçao presente na base de dados linha a linha
-                while (i > j) {
-
-                    String linha = ca.getCacheLine(j);
-                    out.writeUTF(linha);
-                    System.out.println("linha "+j+": "+linha);
-                    j++;
-                }
-                System.out.println("o servidor primario enviou as " + j + " linhas");
-                socket.close(); //fecha a conexao
-                //fecha leitores e escritores
-                in.close();
-                out.close();
-            }else{
-                out.writeUTF("Nao pertences a este Dominio!!!!");
-                socket.close(); //fecha a conexao
-                //fecha leitores e escritores
-                in.close();
-                out.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
-    public static void main(String[] args) throws IOException {
+    public static void  main(String[] args) throws IOException {
         Query q = new Query();
         Cache ca = new Cache();
 
@@ -188,12 +190,25 @@ public class ServerP {
         String configfile = "SP.robalo.txt";
         sp.ParserSp(configfile);
         ca.ParserCacheServer(sp.getDb());
-        //uma thread para este e outra para o outro
-        //sp.clineteServer(q,ca);
 
-        sp.servidorservidor(ca);
+        Thread t1 = new Thread(new Mover(sp, 0, ca, q)); //thread responsavel pela conexao com os clientes
+        Thread t2 = new Thread(new Mover(sp, 1, ca, q)); //thread responsavel pela conexao com os servidores
+
+        t1.start();t2.start(); //iniciar as threads
+
     }
+    static class Mover implements Runnable {
+        ServerP sp;
+        int s;
+        Cache ca;
+        Query q;
+        public Mover(ServerP sp, int s,Cache ca ,Query q) { this.sp=sp; this.s=s;this.ca=ca;this.q=q;}
 
+        public void run() {
+            if (s == 0) sp.clienteServer(q,ca);
+            if (s == 1) sp.servidorservidor(ca);
+        }
+    }
 }
 
 

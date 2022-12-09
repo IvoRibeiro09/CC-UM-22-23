@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class Cliente {
 
-    private DatagramSocket dsocket;
-    private InetAddress ServerIP;
-    private byte[] buffer;
+    private final DatagramSocket dsocket;
+    private final InetAddress ServerIP;
+    private byte[] buffer = new byte[550];
 
     public Cliente(DatagramSocket dsocket,InetAddress ServerIP){
         this.dsocket = dsocket;
@@ -28,6 +28,10 @@ public class Cliente {
                 dsocket.send(dp);
                 //log QE
                 System.out.println("query enviada: "+ msg);
+
+
+                buffer = new byte[550];
+                dp = new DatagramPacket(buffer,buffer.length,ServerIP, 12345);
                 dsocket.receive(dp);
                 //Log RR
                 String resposta = new String(dp.getData(),0, dp.getLength());

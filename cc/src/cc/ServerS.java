@@ -14,7 +14,7 @@ public class ServerS {
     private String lgall;
     private String st;
     private DatagramSocket dsocket;
-    private byte[] buffer = new byte[255];
+    private byte[] buffer = new byte[550];
     //construtor inicial
     public ServerS(DatagramSocket dsocket){
         this.dominio="";
@@ -130,7 +130,7 @@ public class ServerS {
             while (i < count) {
 
                 String str = in.readUTF();
-                System.out.println("linha "+i+": "+str);
+                System.out.println("linha "+(i+1)+": "+str);
                 ca.ParserPorLinha(str, getDominio());
                 i++;
 
@@ -154,9 +154,21 @@ public class ServerS {
         ss.ParserSs(configfile);
         ca.ParserCacheServer(ss.getDb());
 
-        ss.transferenciaZona(ca);
-        //uma thread para este e outra para o outro
-        ss.clienteservidor(q,ca); //ligaçao entre ss e cliente
+        Thread t1 = new Thread(new ServerS.Mover(ss, 0, ca, q)); //thread responsavel pela conexao com os clientes
+        Thread t2 = new Thread(new ServerS.Mover(ss, 1, ca, q)); //thread responsavel pela conexao com os servidores
 
+        t1.start();t2.start(); //iniciar as threads
+    }
+    static class Mover implements Runnable {
+        ServerS ss;
+        int s;
+        Cache ca;
+        Query q;
+        public Mover(ServerS ss, int s,Cache ca ,Query q) { this.ss=ss; this.s=s;this.ca=ca;this.q=q;}
+
+        public void run() {
+            if (s == 0) ss.clienteservidor(q,ca);
+            if (s == 1) ss.transferenciaZona(ca);
+        }
     }
 }

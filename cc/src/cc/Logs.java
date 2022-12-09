@@ -53,9 +53,9 @@ public class Logs {
     public void addToFicheiro(String conteudo,String domain) throws IOException,FileNotFoundException {
         try {
             addToFicheiroGlobal(conteudo);
-            File dmfile = new File( "alllogs."+ domain +".txt");
+            File dmfile = new File( "AllLogs."+ domain +"txt");
             dmfile.createNewFile();
-            FileWriter fW = new FileWriter("alllogs."+ domain +".txt",true);
+            FileWriter fW = new FileWriter("AllLogs."+ domain +"txt",true);
             PrintWriter pW = new PrintWriter(fW);
             String s ="Data: "+getDataHora() + conteudo;
             pW.println(s);
@@ -68,7 +68,7 @@ public class Logs {
     public void addToFicheiroGlobal(String conteudo) throws IOException,FileNotFoundException {
 
         try {
-            FileWriter fW = new FileWriter("logs-CC.txt",true);
+            FileWriter fW = new FileWriter("AllLogs-CC.txt",true);
             PrintWriter pW = new PrintWriter(fW);
             String s ="Data: "+getDataHora() + conteudo;
             pW.println(s);

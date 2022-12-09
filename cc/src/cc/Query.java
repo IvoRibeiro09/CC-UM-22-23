@@ -13,6 +13,7 @@ public class Query {
     private int nExtravalues;
     private String InfoName;
     private String Type;
+    private boolean error;
 
     //construtor vazio
     public Query(){
@@ -26,6 +27,7 @@ public class Query {
         //Data Info
         this.InfoName = "";
         this.Type ="";
+        this.error = false;
     }
     //seters
     public void setID(String s){
@@ -52,6 +54,7 @@ public class Query {
     public void setType(String s){
         this.Type = s;
     }
+    public void setError(){this.error = true;}
 
     //funçao que parte a informaçao da query feita pelo cliente
     // e guarda essa informaçao para posterior uso
@@ -70,7 +73,7 @@ public class Query {
             setInfoName(segParte[0]);
             setType(segParte[1]);
         }catch(Exception e){
-            setnResponse("3");
+            setError();
             log.addFL("mensagem do cliente","mal escrita",getInfoName());
         }
     }
@@ -96,7 +99,10 @@ public class Query {
         List<String> listas = new ArrayList<>();
         Set<String> chaves = ca.getAllva().keySet();
 
-
+        if(this.error){
+            ls.append(getId()).append(",R+A,3,0,0,0;,;");
+            return ls.toString();
+        }
         if (!Objects.equals(ca.getDfault(), nomedominio)) error2++;
         else {
             for (String chave : chaves) {
