@@ -1,0 +1,8 @@
+robalo.moc DB SP.robalo.moc.
+robalo.moc SS 193.123.5.190:5353db
+robalo.moc SS 10.0.4.10
+robalo.moc SS 193.123.5.190:5353
+robalo.moc DD 127.0.0.1
+robalo.moc LG /var/dns/example-com.log
+all LG files/logs-CC.txt
+root ST /var/dns/rootservers.db

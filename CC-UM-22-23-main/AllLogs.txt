@@ -1,0 +1,1 @@
+Data: 19:12:2022.17:35:29:634 Type:FL IP:SP erro:!!!!Erro na leitura do ficheiro de configuraçao do Servidor Primario!!!!

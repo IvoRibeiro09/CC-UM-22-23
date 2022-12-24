@@ -1,0 +1,86 @@
+Data: 07:12:2022.20:00:31:707 Type:FL IP:robalo.moc. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 07:12:2022.20:04:56:299 Type:FL IP:robalo.moc. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 07:12:2022.20:16:12:088 Type:FL IP:robalo.moc. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 07:12:2022.20:16:30:662 Type:FL IP:robalo.moc. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 07:12:2022.20:16:36:612 Type:FL IP:files/SS erro:!!!!Erro na leitura do ficheiro de configuraçáo do Servidor Secundario!!!!
+Data: 07:12:2022.20:16:36:627 Type:EV @ conf-file-read on:files/SS.robalo.txt
+Data: 07:12:2022.20:16:49:246 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:16:49:286 Type:FL IP:robalo.moc. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 07:12:2022.20:16:49:288 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 07:12:2022.20:16:49:316 Type:ZT IP:10.0.16.11 Data:SS
+Data: 07:12:2022.20:19:10:318 Type:FL IP:robalo.moc. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 07:12:2022.20:19:12:517 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:19:12:548 Type:FL IP:robalo.moc. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 07:12:2022.20:19:12:552 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 07:12:2022.20:19:12:576 Type:ZT IP:10.0.16.11 Data:SS
+Data: 07:12:2022.20:20:03:978 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:20:04:011 Type:FL IP:robalo.moc. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 07:12:2022.20:20:04:015 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 07:12:2022.20:20:04:043 Type:ZT IP:10.0.16.11 Data:SS
+Data: 07:12:2022.20:21:49:105 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:21:49:129 Type:FL IP:robalo.moc. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 07:12:2022.20:21:49:133 Type:EV @ db-file-read on:files/SS.robalo.moc.db
+Data: 07:12:2022.20:21:49:160 Type:ZT IP:10.0.16.11 Data:SS
+Data: 07:12:2022.20:22:37:227 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:22:40:763 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:22:40:854 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:22:40:858 Type:EV @ db-file-read on:SS.robalo.moc.db
+Data: 07:12:2022.20:23:54:871 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:23:57:280 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:23:57:363 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:23:57:364 Type:EV @ db-file-read on:SS.robalo.moc.db
+Data: 07:12:2022.20:25:37:786 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:25:40:353 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:25:40:421 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:25:40:425 Type:EV @ db-file-read on:SS.robalo.moc.db
+Data: 07:12:2022.20:27:22:401 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:27:26:191 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:27:26:289 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:27:26:290 Type:EV @ db-file-read on:SS.robalo.moc.db
+Data: 07:12:2022.20:29:35:098 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:29:36:832 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:29:36:874 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:29:36:874 Type:EV @ db-file-read on:SS.robalo.moc.db
+Data: 07:12:2022.20:31:32:744 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:31:34:738 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:31:34:779 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:31:34:780 Type:EV @ db-file-read on:SS.robalo.moc.db
+Data: 07:12:2022.20:32:55:709 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:32:57:328 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:32:57:383 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:32:57:384 Type:EV @ db-file-read on:SS.robalo.moc.db
+Data: 07:12:2022.20:33:10:315 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:33:11:899 Type:EV @ conf-file-read on:SS.robalo.txt
+Data: 07:12:2022.20:33:11:949 Type:EV @ db-file-read on:robalo.moc.
+Data: 07:12:2022.20:33:11:950 Type:EV @ db-file-read on:SS.robalo.moc.db
+Data: 07:12:2022.20:33:11:977 Type:EZ IP:10.0.16.11 Data:SS
+Data: 07:12:2022.20:37:04:668 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:10:00:327 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:10:18:430 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:10:23:472 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:16:49:062 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:16:51:019 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:34:26:384 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:34:34:129 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:36:36:176 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:36:39:035 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:37:21:724 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:37:23:764 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:37:53:771 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:37:55:740 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:38:12:609 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:38:14:155 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:38:59:479 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:39:03:127 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:46:11:950 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.19:46:14:757 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:00:18:435 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:00:20:971 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:09:30:984 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:09:33:643 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:23:36:113 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:23:38:557 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:34:07:530 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:34:10:352 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:34:58:758 Type:EV @ db-file-read on:robalo.moc.
+Data: 08:12:2022.22:35:00:252 Type:EV @ db-file-read on:robalo.moc.

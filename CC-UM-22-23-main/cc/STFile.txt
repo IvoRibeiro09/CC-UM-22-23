@@ -1,0 +1,5 @@
+# Configuration file for top server 
+root ST 193.137.100.250
+root ST 193.137.100.251
+root LG /var/dns/example-com.log
+all LG /var/dns/example-com.log
