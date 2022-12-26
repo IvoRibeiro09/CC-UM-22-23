@@ -24,6 +24,7 @@ public class Cache {
     private int lines ;
     private ArrayList<String> AllLines;
 
+
     //construtor vazio
     public Cache(){
         this.dfault = "";
@@ -207,6 +208,7 @@ public class Cache {
                 incLines();
                 setAllLines(linha[0]+"."+getDfault()+" "+linha[1]+" "+linha[2]+"."+getDfault()+" "+getTtl());
             }
+
         }
     }
 }

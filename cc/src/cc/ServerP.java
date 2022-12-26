@@ -3,9 +3,6 @@ package cc;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.concurrent.locks.ReentrantLock;
-
-import static java.lang.Thread.sleep;
 
 public class ServerP {
     private String dominio;
@@ -16,11 +13,10 @@ public class ServerP {
     private String lgall;
     private String st;
     private final ServerSocket ss;
-    private final DatagramSocket dsocket;
     private byte[] buffer = new byte[550];
 
     //construtor vazio de um servidor principal
-    public ServerP(DatagramSocket dsocket,ServerSocket ss) {
+    public ServerP(ServerSocket ss) {
         this.dominio = "";
         this.db = "";
         this.listaServerS = new ArrayList<>();
@@ -28,7 +24,6 @@ public class ServerP {
         this.lg = "";
         this.lgall = "";
         this.st = "";
-        this.dsocket = dsocket;
         this.ss = ss;
     }
 
@@ -102,35 +97,9 @@ public class ServerP {
             e.printStackTrace();
         }
     }
-    public void clienteServer(Query q,Cache ca) {
-        while (true) {
-            System.out.println("!!!!!!!!!! espera conexão de um cliente !!!!!!!!!!!!!!");
-            try {
-                DatagramPacket dp = new DatagramPacket(buffer,buffer.length);
-                dsocket.receive(dp);
-                //log QR
-                InetAddress ClienteIp = dp.getAddress();
-                int porta = dp.getPort();
-                String query = new String(dp.getData(),0,dp.getLength());
-                System.out.println("query recebida: " + query);
-
-                buffer = new byte[64000];
-                String querydone = q.doQuery(query,ca);
-                buffer = querydone.getBytes();
-                dp = new DatagramPacket(buffer,buffer.length,ClienteIp,porta);
-                System.out.println("resposta enviada: "+ querydone);
-                dsocket.send(dp);
-                //log RP
-            }catch (IOException e) {
-                e.printStackTrace();
-                break;
-            }
-        }
-    }
-
-    public void servidorservidor(Cache ca){
+    public void servidorSp(Cache ca,Query q){
         while(true){
-            System.out.println("!!!!!!!!!! espera conexão de um servidor !!!!!!!!!!!!!!");
+            System.out.println("!!!!!!!!!! SP à espera de conexão!!!!!!!!!!!!!!");
             try{
                 Socket socket = ss.accept();
                 System.out.println("um servidor foi conectado ao servidor principal");
@@ -164,17 +133,20 @@ public class ServerP {
                         j++;
                     }
                     System.out.println("o servidor primario enviou as " + (j+1) + " linhas");
-                    socket.close(); //fecha a conexao
-                    //fecha leitores e escritores
-                    in.close();
-                    out.close();
+
                 }else{
-                    out.writeUTF("Nao pertences a este Dominio!!!!");
-                    socket.close(); //fecha a conexao
-                    //fecha leitores e escritores
-                    in.close();
-                    out.close();
+                    System.out.println("recebi do ST ou do Sr a query: "+str);
+
+                    //responder á query
+                    String resposta = q.doQuery(str,ca);
+                    System.out.println("reposta devolvida pelo Sp : "+resposta);
+                    out.writeUTF(resposta);
+
                 }
+
+                socket.close(); //fecha a conexao
+                in.close();//fecha leitores e escritores
+                out.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -184,9 +156,8 @@ public class ServerP {
         Query q = new Query();
         Cache ca = new Cache();
 
-        DatagramSocket ds = new DatagramSocket(12345);
-        ServerSocket ss = new ServerSocket(12346);
-        ServerP sp = new ServerP(ds,ss);
+        ServerSocket ss = new ServerSocket(12345);
+        ServerP sp = new ServerP(ss);
         String configfile = "SP.robalo.txt";
         sp.ParserSp(configfile);
         ca.ParserCacheServer(sp.getDb());
@@ -205,8 +176,8 @@ public class ServerP {
         public Mover(ServerP sp, int s,Cache ca ,Query q) { this.sp=sp; this.s=s;this.ca=ca;this.q=q;}
 
         public void run() {
-            if (s == 0) sp.clienteServer(q,ca);
-            if (s == 1) sp.servidorservidor(ca);
+            if (s == 0) sp.servidorSp(ca,q);
+            //if (s == 1) sp.SPSS(ca);
         }
     }
 }

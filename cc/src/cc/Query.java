@@ -87,6 +87,17 @@ public class Query {
         return Type;
     }
 
+
+
+    public int dominioQuery(String query,String dominio) throws  IOException{
+        ParserQuery(query);
+        String nomedominio = getInfoName();
+        if(Objects.equals(nomedominio,dominio)&&!this.error){
+            return 1;
+        } else if(!Objects.equals(nomedominio,dominio)&&!this.error){
+            return 0;
+        } else return -1;
+    }
     public String doQuery(String str,Cache ca) throws IOException {
         ParserQuery(str);
         String nomedominio = getInfoName();
