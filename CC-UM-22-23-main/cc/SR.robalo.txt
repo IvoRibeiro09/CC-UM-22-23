@@ -1,7 +1,0 @@
-.robalo SP 10.0.16.11
-.robalo SS 10.0.4.10
-.robalo SS 193.123.5.190:5353
-.robalo DD 127.0.0.1
-.robalo LG /var/dns/robalo.moc.log
-all LG /var/dns/all.log
-root ST /var/dns/robalo.moc.db
