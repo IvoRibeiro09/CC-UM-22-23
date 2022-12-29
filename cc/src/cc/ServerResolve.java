@@ -2,54 +2,37 @@ package cc;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class ServerResolve {
-
     private String dominio;
     private String db;
-    private String serverP;
-    private List<String> listaServerS;
+    private HashMap<String,String> ServerIps;
     private String dd;
     private String lg;
     private String lgall;
-    private String st;
-    private List <String> listaSTs;
-    //private final ServerSocket ssocket;
+    private String ST;
     private final DatagramSocket dsocket;
     private byte[] buffer = new byte[550];
 
 
     public ServerResolve(DatagramSocket dsocket){
-        this.dominio = "";
         this.db = "";
-        this.serverP = "";
-        this.listaServerS = new ArrayList<>();
+        this.ServerIps = new HashMap<>();
         this.dd = "";
         this.lg = "";
         this.lgall = "";
-        this.st = "";
-        this.listaSTs = new ArrayList<>();
-        //this.ssocket = ss;
         this.dsocket = dsocket;
     }
 
     //seters
-    public void setDominio(String s) {
-        this.dominio = s;
-    }
-
     public void setdb(String s) {
         this.db = s;
     }
+    public void setDominio(String s){this.dominio = s;}
 
-    public void setsp(String s) { this.serverP = s;}
-
-    public void setss(String s) {
-        this.listaServerS.add(s);
+    public void setServerIps(String key,String value){
+        this.ServerIps.put(key,value);
     }
 
     public void setdd(String s) {
@@ -63,29 +46,13 @@ public class ServerResolve {
     public void setlgall(String s) {
         this.lgall = s;
     }
-
-    public void setst(String s) {
-        this.st = s;
-    }
-
-    public void setsts(String s) {
-        this.listaSTs.add(s);
-    }
+    public void setSt(String s){this.ST = s;}
 
     //geters
-    public String getDominio() {
-        return this.dominio;
-    }
     public String getDb() {
         return this.db;
     }
-    public String get1SS() {
-        return listaServerS.get(0);
-    }
-
-    public String getServerP() {
-        return serverP;
-    }
+    public String getDominio(){return this.dominio;}
 
     public void ParserSp(String str) throws IOException {
         Logs log = new Logs();
@@ -96,10 +63,9 @@ public class ServerResolve {
                 String data = myReader.nextLine();
                 String[] linha = data.split(" ");
                 if (Objects.equals(linha[1], "SP")) {
-                    setsp(linha[2]);
-                    setDominio(linha[0]);
+                    setServerIps(linha[1],linha[2]);
                 } else if (Objects.equals(linha[1], "SS")) {
-                    setss(linha[2]);
+                    setServerIps(linha[1],linha[2]);
                 } else if (Objects.equals(linha[1], "DD")) {
                     setdd(linha[2]);
                 } else if (Objects.equals(linha[0], "all") && Objects.equals(linha[1], "LG")) {
@@ -107,7 +73,8 @@ public class ServerResolve {
                 } else if (!Objects.equals(linha[0], "all") && Objects.equals(linha[1], "LG")) {
                     setlgall(linha[2]);
                 } else if (Objects.equals(linha[1], "ST")) {
-                    setst(linha[2]);
+                    setSt(linha[2]);
+                    setDominio(linha[0]);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -116,19 +83,19 @@ public class ServerResolve {
             e.printStackTrace();
         }
     }
-    public String SRSP(String query) throws IOException{
+    public String SRSP(String query,String IP) throws IOException{
         String resposta = null;
         System.out.println("mensagem enviada ao sp do mesmo dominio: "+query);
         try{
-            Socket socket = new Socket("localhost",12345);                   //no ide
+            Socket socket = new Socket(this.ServerIps.get("SP"),12345);                   //no ide
             DataInputStream in = new DataInputStream(socket.getInputStream());         //leitores
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
             out.writeUTF(query);
-            System.out.println("mandei a query ao ST");
+            System.out.println("mandei a query ao SP");
 
             resposta = in.readUTF();
-            System.out.println("recebi a seguinte resposta do st: "+resposta);
+            System.out.println("recebi a seguinte resposta do sp: "+resposta);
 
         }catch (IOException e){
             e.printStackTrace();
@@ -140,7 +107,7 @@ public class ServerResolve {
         String resposta = null;
         System.out.println("mensagem enviada ao st: "+query);
         try{
-            Socket socket = new Socket("localhost",64321);                   //no ide
+            Socket socket = new Socket(this.ServerIps.get("ST"),64321);                   //no ide
             DataInputStream in = new DataInputStream(socket.getInputStream());         //leitores
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
@@ -149,6 +116,10 @@ public class ServerResolve {
             System.out.println("mandei a query ao ST");
 
             resposta = in.readUTF();
+            String[] aux = resposta.split("!");
+            if(Objects.equals(aux[0],"smaller")){
+                resposta = SRSP(query,aux[1]);
+            }
             System.out.println("recebi a seguinte resposta do st: "+resposta);
 
         }catch (IOException e){
@@ -171,13 +142,18 @@ public class ServerResolve {
                 String resposta;
                 if(isdomain(query) == 0) {
                     //enviar para o sp do dominio
-                    resposta = SRST(query);
+                    resposta = SRSP(query,"");
                 }else {
                     //enviar para o st
-                    resposta = SRSP(query);
+                    resposta = SRST(query);
                 }
                 //enviar resposta
                 //por fim enviar a resposta ao cliente
+                buffer = new byte[550];
+                buffer = resposta.getBytes();
+                dp = new DatagramPacket(buffer,buffer.length,ClienteIp,porta);
+                System.out.println("resposta enviada: "+ resposta);
+                dsocket.send(dp);
                 //log RP
             }catch (IOException e) {
                 e.printStackTrace();

@@ -17,7 +17,7 @@ public class Cache {
     private String soaexpire;
     private HashMap<String,String> allva;
      private HashMap<String,String> ns;
-     private HashMap<String,String > smalers;
+     private String smaler;
      private HashMap<String,String> mx;
      private HashMap<String,String> Aips;
     private HashMap<String,String> cnames;
@@ -36,7 +36,7 @@ public class Cache {
         this.soaexpire = "";
         this.allva = new HashMap<>();
         this.ns = new HashMap<>();
-        this.smalers = new HashMap<>();
+        this.smaler = "";
         this.mx = new HashMap<>();
         this.Aips = new HashMap<>();
         this.cnames = new HashMap<>();
@@ -71,8 +71,8 @@ public class Cache {
     public void setAllva(String key,String value){
         this.allva.put(value,key);
     }
-    public void setSmalers(String key,String value){
-        this.smalers.put(key,value);
+    public void setSmalers(String name){
+        this.smaler = name;
     }
     public void setNs(String key,String value){
         this.ns.put(key,value);
@@ -103,6 +103,7 @@ public class Cache {
     public String getTtl(){
         return ttl;
     }
+    public String getSmaller(){return this.smaler;}
     public HashMap<String,String> getAIps(){
         return Aips;
     }
@@ -115,6 +116,7 @@ public class Cache {
     public String getCacheLine(int i){
         return AllLines.get(i);
     }
+
 
     //parser de ficheiros de base de dados de servidores
     public void ParserCacheServer(String strfile) throws IOException {
@@ -191,7 +193,7 @@ public class Cache {
             }else if (Objects.equals(linha[0], "TTL")) {
                 setttl(linha[2]);
             }else if (Objects.equals(linha[0],"Smaller.@")){
-                setSmalers(linha[1], linha[2]);
+                setSmalers(linha[2]);
                 incLines();
                 setAllLines("Smaller.@ "+linha[1]+" "+linha[2]);
             } else if (Objects.equals(linha[1], "A") && Objects.equals(linha[0], "www")) {
@@ -210,5 +212,10 @@ public class Cache {
             }
 
         }
+    }
+
+    public String getSmallerIp() {
+        String nome = getSmaller();
+        return this.Aips.get(nome);
     }
 }

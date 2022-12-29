@@ -134,6 +134,9 @@ public class ServerP {
                     }
                     System.out.println("o servidor primario enviou as " + (j+1) + " linhas");
 
+                }else if(Objects.equals(aux[0],"smaller")) {
+                    String ip = ca.getSmallerIp();
+                    out.writeUTF(ip);
                 }else{
                     System.out.println("recebi do ST ou do Sr a query: "+str);
 
@@ -158,8 +161,8 @@ public class ServerP {
 
         ServerSocket ss = new ServerSocket(12345);
         ServerP sp = new ServerP(ss);
-        String configfile = "SP.robalo.txt";
-        sp.ParserSp(configfile);
+        //String configfile = "SP.robalo.txt";
+        sp.ParserSp(args[0]);
         ca.ParserCacheServer(sp.getDb());
 
         Thread t1 = new Thread(new Mover(sp, 0, ca, q)); //thread responsavel pela conexao com os clientes

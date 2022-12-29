@@ -108,7 +108,7 @@ public class ServerS {
     public void transferenciaZona(Cache ca){
         System.out.println("!!!!!!!! iniciei uma transferencia de zona!!!!!!!!!");
         try{
-            Socket socket = new Socket("localhost",12346);                   //no ide
+            Socket socket = new Socket(this.sp,12346);                   //no ide
             DataInputStream in = new DataInputStream(socket.getInputStream());         //leitores
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());     //escritor
 
