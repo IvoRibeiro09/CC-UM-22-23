@@ -1,7 +1,0 @@
-# Base de dados Servidores de Topo
-sp.bacalhau. A 10.0.27.11
-ss.bacalhau. A 10.0.28.11
-ss.bacalhau. A 10.0.26.12
-sp.robalo. A 10.0.16.11
-ss.robalo. A 10.0.14.10
-ss.robalo. A 10.0.24.12
