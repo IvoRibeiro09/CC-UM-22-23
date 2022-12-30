@@ -4,6 +4,10 @@ node n1 {
     network-config {
 	hostname Router1
 	!
+	interface eth5
+	 ip address 10.0.29.1/24
+	 ipv6 address 2001:29::1/64
+	!
 	interface eth4
 	 ip address 10.0.22.1/24
 	 ipv6 address 2001:22::1/64
@@ -34,6 +38,7 @@ node n1 {
     services {OSPFv2 OSPFv3 zebra IPForward}
     interface-peer {eth2 n39}
     interface-peer {eth4 n40}
+    interface-peer {eth5 n59}
 }
 
 node n2 {
@@ -106,8 +111,8 @@ node n3 {
 	!
     }
     canvas c1
-    iconcoords {755.0 359.0}
-    labelcoords {790.0 399.0}
+    iconcoords {729.0 360.0}
+    labelcoords {764.0 400.0}
     interface-peer {eth0 n7}
     interface-peer {eth1 n4}
     interface-peer {eth2 n2}
@@ -143,8 +148,8 @@ node n4 {
 	!
     }
     canvas c1
-    iconcoords {592.0 506.0}
-    labelcoords {607.0 464.0}
+    iconcoords {603.0 488.0}
+    labelcoords {618.0 446.0}
     interface-peer {eth0 n3}
     interface-peer {eth1 n5}
     interface-peer {eth2 n2}
@@ -280,8 +285,8 @@ node n8 {
 	!
     }
     canvas c1
-    iconcoords {353.0 628.0}
-    labelcoords {353.0 660.0}
+    iconcoords {393.0 650.0}
+    labelcoords {393.0 682.0}
     interface-peer {eth0 n5}
 }
 
@@ -297,8 +302,8 @@ node n9 {
 	!
     }
     canvas c1
-    iconcoords {525.0 644.0}
-    labelcoords {525.0 676.0}
+    iconcoords {524.0 650.0}
+    labelcoords {524.0 682.0}
     interface-peer {eth0 n4}
 }
 
@@ -306,7 +311,7 @@ node n10 {
     type router
     model host
     network-config {
-	hostname SS2
+	hostname SS33
 	!
 	interface eth0
 	 ip address 10.0.26.12/24
@@ -323,7 +328,7 @@ node n11 {
     type router
     model host
     network-config {
-	hostname MX1
+	hostname MX3
 	!
 	interface eth0
 	 ip address 10.0.26.11/24
@@ -340,7 +345,7 @@ node n12 {
     type router
     model host
     network-config {
-	hostname SR
+	hostname SR3
 	!
 	interface eth0
 	 ip address 10.0.26.10/24
@@ -348,8 +353,8 @@ node n12 {
 	!
     }
     canvas c1
-    iconcoords {855.0 670.0}
-    labelcoords {855.0 702.0}
+    iconcoords {856.0 670.0}
+    labelcoords {856.0 702.0}
     interface-peer {eth0 n47}
 }
 
@@ -357,7 +362,7 @@ node n13 {
     type router
     model host
     network-config {
-	hostname SP
+	hostname SP3
 	!
 	interface eth0
 	 ip address 10.0.27.11/24
@@ -374,7 +379,7 @@ node n14 {
     type router
     model host
     network-config {
-	hostname WebServer
+	hostname WebServer3
 	!
 	interface eth0
 	 ip address 10.0.27.10/24
@@ -391,7 +396,7 @@ node n15 {
     type router
     model host
     network-config {
-	hostname SS1
+	hostname SS3
 	!
 	interface eth0
 	 ip address 10.0.28.11/24
@@ -408,7 +413,7 @@ node n16 {
     type router
     model host
     network-config {
-	hostname MX2
+	hostname MX33
 	!
 	interface eth0
 	 ip address 10.0.28.10/24
@@ -433,8 +438,8 @@ node n17 {
 	!
     }
     canvas c1
-    iconcoords {877.0 356.0}
-    labelcoords {877.0 388.0}
+    iconcoords {854.0 337.0}
+    labelcoords {854.0 369.0}
     interface-peer {eth0 n48}
 }
 
@@ -442,7 +447,7 @@ node n18 {
     type router
     model host
     network-config {
-	hostname MX1
+	hostname MX2
 	!
 	interface eth0
 	 ip address 10.0.17.11/24
@@ -450,8 +455,8 @@ node n18 {
 	!
     }
     canvas c1
-    iconcoords {973.0 310.0}
-    labelcoords {973.0 342.0}
+    iconcoords {951.0 311.0}
+    labelcoords {951.0 343.0}
     interface-peer {eth0 n48}
 }
 
@@ -459,7 +464,7 @@ node n19 {
     type router
     model host
     network-config {
-	hostname SR
+	hostname SR2
 	!
 	interface eth0
 	 ip address 10.0.17.10/24
@@ -476,7 +481,7 @@ node n20 {
     type router
     model host
     network-config {
-	hostname SS1
+	hostname SS22
 	!
 	interface eth0
 	 ip address 10.0.18.11/24
@@ -484,8 +489,8 @@ node n20 {
 	!
     }
     canvas c1
-    iconcoords {975.0 162.0}
-    labelcoords {975.0 194.0}
+    iconcoords {975.0 161.0}
+    labelcoords {975.0 193.0}
     interface-peer {eth0 n49}
 }
 
@@ -493,7 +498,7 @@ node n21 {
     type router
     model host
     network-config {
-	hostname MX2
+	hostname MX22
 	!
 	interface eth0
 	 ip address 10.0.18.10/24
@@ -510,7 +515,7 @@ node n22 {
     type router
     model host
     network-config {
-	hostname SP
+	hostname SP2
 	!
 	interface eth0
 	 ip address 10.0.19.11/24
@@ -518,8 +523,8 @@ node n22 {
 	!
     }
     canvas c1
-    iconcoords {731.0 36.0}
-    labelcoords {761.0 48.0}
+    iconcoords {730.0 37.0}
+    labelcoords {760.0 49.0}
     interface-peer {eth0 n50}
 }
 
@@ -527,7 +532,7 @@ node n23 {
     type router
     model host
     network-config {
-	hostname WebServer
+	hostname WebServer2
 	!
 	interface eth0
 	 ip address 10.0.19.10/24
@@ -535,8 +540,8 @@ node n23 {
 	!
     }
     canvas c1
-    iconcoords {663.0 146.0}
-    labelcoords {663.0 178.0}
+    iconcoords {677.0 131.0}
+    labelcoords {677.0 163.0}
     interface-peer {eth0 n50}
 }
 
@@ -544,7 +549,7 @@ node n24 {
     type router
     model host
     network-config {
-	hostname SP
+	hostname SPreverse
 	!
 	interface eth0
 	 ip address 10.0.20.10/24
@@ -552,8 +557,8 @@ node n24 {
 	!
     }
     canvas c1
-    iconcoords {447.0 34.0}
-    labelcoords {413.0 58.0}
+    iconcoords {395.0 62.0}
+    labelcoords {361.0 86.0}
     interface-peer {eth0 n51}
 }
 
@@ -561,7 +566,7 @@ node n25 {
     type router
     model host
     network-config {
-	hostname SS2
+	hostname SS11
 	!
 	interface eth0
 	 ip address 10.0.21.12/24
@@ -569,8 +574,8 @@ node n25 {
 	!
     }
     canvas c1
-    iconcoords {313.0 62.0}
-    labelcoords {313.0 94.0}
+    iconcoords {307.0 58.0}
+    labelcoords {307.0 90.0}
     interface-peer {eth0 n39}
 }
 
@@ -578,7 +583,7 @@ node n26 {
     type router
     model host
     network-config {
-	hostname MX1
+	hostname MX11
 	!
 	interface eth0
 	 ip address 10.0.21.11/24
@@ -595,7 +600,7 @@ node n27 {
     type router
     model host
     network-config {
-	hostname SR
+	hostname SR1
 	!
 	interface eth0
 	 ip address 10.0.21.10/24
@@ -612,7 +617,7 @@ node n28 {
     type router
     model host
     network-config {
-	hostname SP
+	hostname SP1
 	!
 	interface eth0
 	 ip address 10.0.22.11/24
@@ -629,7 +634,7 @@ node n29 {
     type router
     model host
     network-config {
-	hostname WebServer
+	hostname WebServer1
 	!
 	interface eth0
 	 ip address 10.0.22.10/24
@@ -637,8 +642,8 @@ node n29 {
 	!
     }
     canvas c1
-    iconcoords {81.0 238.0}
-    labelcoords {81.0 270.0}
+    iconcoords {40.0 223.0}
+    labelcoords {40.0 255.0}
     interface-peer {eth0 n40}
 }
 
@@ -654,8 +659,8 @@ node n30 {
 	!
     }
     canvas c1
-    iconcoords {27.0 264.0}
-    labelcoords {27.0 296.0}
+    iconcoords {36.0 274.0}
+    labelcoords {36.0 306.0}
     interface-peer {eth0 n41}
 }
 
@@ -663,7 +668,7 @@ node n31 {
     type router
     model host
     network-config {
-	hostname MX2
+	hostname MX1
 	!
 	interface eth0
 	 ip address 10.0.23.10/24
@@ -671,8 +676,8 @@ node n31 {
 	!
     }
     canvas c1
-    iconcoords {127.0 368.0}
-    labelcoords {127.0 400.0}
+    iconcoords {141.0 365.0}
+    labelcoords {141.0 397.0}
     interface-peer {eth0 n41}
 }
 
@@ -680,7 +685,7 @@ node n32 {
     type router
     model host
     network-config {
-	hostname MX2
+	hostname MX44
 	!
 	interface eth0
 	 ip address 10.0.14.11/24
@@ -697,7 +702,7 @@ node n33 {
     type router
     model host
     network-config {
-	hostname SS1
+	hostname SS4
 	!
 	interface eth0
 	 ip address 10.0.14.10/24
@@ -714,7 +719,7 @@ node n34 {
     type router
     model host
     network-config {
-	hostname SP
+	hostname SP4
 	!
 	interface eth0
 	 ip address 10.0.16.11/24
@@ -731,7 +736,7 @@ node n35 {
     type router
     model host
     network-config {
-	hostname WebServer
+	hostname WebServer4
 	!
 	interface eth0
 	 ip address 10.0.16.10/24
@@ -748,7 +753,7 @@ node n36 {
     type router
     model host
     network-config {
-	hostname SS2
+	hostname SS44
 	!
 	interface eth0
 	 ip address 10.0.24.12/24
@@ -765,7 +770,7 @@ node n37 {
     type router
     model host
     network-config {
-	hostname MX1
+	hostname MX4
 	!
 	interface eth0
 	 ip address 10.0.24.11/24
@@ -782,7 +787,7 @@ node n38 {
     type router
     model host
     network-config {
-	hostname SR
+	hostname SR4
 	!
 	interface eth0
 	 ip address 10.0.24.10/24
@@ -790,8 +795,8 @@ node n38 {
 	!
     }
     canvas c1
-    iconcoords {299.0 578.0}
-    labelcoords {299.0 610.0}
+    iconcoords {290.0 583.0}
+    labelcoords {290.0 615.0}
     interface-peer {eth0 n45}
 }
 
@@ -802,8 +807,8 @@ node n39 {
 	!
     }
     canvas c1
-    iconcoords {211.0 106.0}
-    labelcoords {211.0 130.0}
+    iconcoords {201.0 129.0}
+    labelcoords {201.0 153.0}
     interface-peer {e0 n1}
     interface-peer {e1 n27}
     interface-peer {e2 n26}
@@ -817,8 +822,8 @@ node n40 {
 	!
     }
     canvas c1
-    iconcoords {75.0 174.0}
-    labelcoords {75.0 198.0}
+    iconcoords {106.0 161.0}
+    labelcoords {106.0 185.0}
     interface-peer {e0 n1}
     interface-peer {e1 n29}
     interface-peer {e2 n28}
@@ -831,8 +836,8 @@ node n41 {
 	!
     }
     canvas c1
-    iconcoords {113.0 298.0}
-    labelcoords {113.0 322.0}
+    iconcoords {156.0 295.0}
+    labelcoords {156.0 319.0}
     interface-peer {e0 n6}
     interface-peer {e1 n31}
     interface-peer {e2 n30}
@@ -846,8 +851,8 @@ node n48 {
 	!
     }
     canvas c1
-    iconcoords {869.0 270.0}
-    labelcoords {869.0 294.0}
+    iconcoords {834.0 263.0}
+    labelcoords {834.0 287.0}
     interface-peer {e0 n3}
     interface-peer {e1 n19}
     interface-peer {e2 n18}
@@ -876,8 +881,8 @@ node n50 {
 	!
     }
     canvas c1
-    iconcoords {741.0 98.0}
-    labelcoords {741.0 122.0}
+    iconcoords {763.0 117.0}
+    labelcoords {763.0 141.0}
     interface-peer {e0 n7}
     interface-peer {e1 n23}
     interface-peer {e2 n22}
@@ -890,8 +895,8 @@ node n51 {
 	!
     }
     canvas c1
-    iconcoords {477.0 82.0}
-    labelcoords {477.0 106.0}
+    iconcoords {399.0 122.0}
+    labelcoords {399.0 146.0}
     interface-peer {e0 n7}
     interface-peer {e1 n24}
 }
@@ -1042,7 +1047,7 @@ node n54 {
     type router
     model PC
     network-config {
-	hostname Cliente
+	hostname Cliente4
 	!
 	interface eth0
 	 ip address 10.0.14.20/24
@@ -1050,8 +1055,8 @@ node n54 {
 	!
     }
     canvas c1
-    iconcoords {219.0 454.0}
-    labelcoords {219.0 486.0}
+    iconcoords {220.0 454.0}
+    labelcoords {220.0 486.0}
     interface-peer {eth0 n46}
 }
 
@@ -1059,7 +1064,7 @@ node n55 {
     type router
     model PC
     network-config {
-	hostname Cliente
+	hostname Cliente1
 	!
 	interface eth0
 	 ip address 10.0.23.20/24
@@ -1067,8 +1072,8 @@ node n55 {
 	!
     }
     canvas c1
-    iconcoords {27.0 370.0}
-    labelcoords {17.0 356.0}
+    iconcoords {44.0 353.0}
+    labelcoords {34.0 339.0}
     interface-peer {eth0 n41}
 }
 
@@ -1076,7 +1081,7 @@ node n56 {
     type router
     model PC
     network-config {
-	hostname Cliente
+	hostname Cliente2
 	!
 	interface eth0
 	 ip address 10.0.18.20/24
@@ -1093,7 +1098,7 @@ node n57 {
     type router
     model PC
     network-config {
-	hostname Cliente
+	hostname Cliente3
 	!
 	interface eth0
 	 ip address 10.0.28.20/24
@@ -1104,6 +1109,36 @@ node n57 {
     iconcoords {755.0 468.0}
     labelcoords {755.0 500.0}
     interface-peer {eth0 n53}
+}
+
+node n58 {
+    type router
+    model host
+    network-config {
+	hostname SP0
+	!
+	interface eth0
+	 ip address 10.0.29.10/24
+	 ipv6 address 2001:29::10/64
+	!
+    }
+    canvas c1
+    iconcoords {518.0 69.0}
+    labelcoords {518.0 101.0}
+    interface-peer {eth0 n59}
+}
+
+node n59 {
+    type lanswitch
+    network-config {
+	hostname n59
+	!
+    }
+    canvas c1
+    iconcoords {593.0 117.0}
+    labelcoords {593.0 141.0}
+    interface-peer {e0 n1}
+    interface-peer {e1 n58}
 }
 
 link l1 {
@@ -1416,6 +1451,16 @@ link l29 {
     bandwidth 0
 }
 
+link l63 {
+    nodes {n1 n59}
+    bandwidth 0
+}
+
+link l64 {
+    nodes {n59 n58}
+    bandwidth 0
+}
+
 annotation a1 {
     iconcoords {205 136 782 553}
     type oval
@@ -1538,7 +1583,7 @@ annotation a4 {
 }
 
 annotation a5 {
-    iconcoords {343.0 10.0 643.0 148.0}
+    iconcoords {338 8 642 150}
     type rectangle
     label {}
     labelcolor black
@@ -1658,12 +1703,26 @@ annotation a25 {
 }
 
 annotation a26 {
-    iconcoords {505.0 78.0}
+    iconcoords {356.0 26.0}
     type text
     label {.reverse}
     labelcolor #ffffff
     fontfamily {Arial}
     fontsize {20}
+    canvas c1
+}
+
+annotation a27 {
+    iconcoords {481.0 11.0 629.0 152.0}
+    type rectangle
+    label {.addr.reverse}
+    labelcolor black
+    fontfamily {Arial}
+    fontsize 12
+    color #c0a8ff
+    width 0
+    border black
+    rad 25
     canvas c1
 }
 
