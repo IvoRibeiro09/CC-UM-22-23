@@ -1,0 +1,13 @@
+Data: 29:12:2022.17:51:17:098 Type:FL IP:SP erro:!!!!Erro na leitura do ficheiro de configuraçao do Servidor Primario!!!!
+Data: 29:12:2022.20:11:09:723 Type:FL IP:Sp erro:!!!!Erro na leitura do ficheiro de configuraçao do Servidor Primario!!!!
+Data: 30:12:2022.02:27:31:193 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.02:33:31:978 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.03:06:00:005 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.12:10:42:580 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.12:23:01:345 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.12:54:02:981 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.15:54:43:531 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.16:12:21:173 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.17:16:48:483 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.17:40:51:375 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 30:12:2022.17:43:36:424 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
