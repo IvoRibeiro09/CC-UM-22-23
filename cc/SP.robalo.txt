@@ -1,7 +1,0 @@
-robalo. DB SP.robalo.db
-robalo. SS 10.0.14.10
-robalo. SS 10.0.24.12
-robalo. DD 127.0.0.1
-robalo. LG
-all LG logs-CC.txt
-root ST 10.0.12.10

@@ -1,6 +1,0 @@
-robalo. DB SS.robalo.db
-robalo. SP 10.0.16.11
-robalo. DD 127.0.0.1
-robalo. LG /var/dns/robalo.moc.log
-all LG /var/dns/all.log
-root ST 10.0.12.10

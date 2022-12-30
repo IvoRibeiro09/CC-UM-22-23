@@ -1,6 +1,0 @@
-example.com DB /var/dns/example-com.db
-root SP 10.0.13.10
-example.com DD 127.0.0.1
-example.com LG /var/dns/example-com.log
-all LG /var/dns/all.log
-root ST /var/dns/rootservers.db 
