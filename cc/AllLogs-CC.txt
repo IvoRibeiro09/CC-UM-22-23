@@ -106,3 +106,18 @@ Data: 30:12:2022.19:29:03:340 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro 
 Data: 30:12:2022.19:31:19:385 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
 Data: 30:12:2022.19:32:03:750 Type:EV @ db-file-read on:reverse.
 Data: 30:12:2022.19:32:32:611 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.16:59:45:725 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.17:00:01:499 Type:EV @ db-file-read on:reverse.
+Data: 31:12:2022.17:02:40:568 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.17:10:55:293 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.17:11:35:047 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.17:13:00:483 Type:EV @ db-file-read on:reverse.
+Data: 31:12:2022.17:23:13:612 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.17:23:30:901 Type:EV @ db-file-read on:reverse.
+Data: 31:12:2022.17:30:03:277 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.17:30:41:522 Type:EV @ db-file-read on:reverse.
+Data: 31:12:2022.17:34:45:917 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.17:35:20:486 Type:FL IP:arroz.robalo. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.17:35:39:386 Type:EV @ db-file-read on:robalo.
+Data: 31:12:2022.17:40:23:987 Type:FL IP:bd. erro:!!!!Erro no parse do ficheiro de Base de Dados!!!!
+Data: 31:12:2022.17:40:44:323 Type:EV @ db-file-read on:robalo.

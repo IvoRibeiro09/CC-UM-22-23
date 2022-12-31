@@ -133,7 +133,7 @@ public class ServerP {
                     String nome = ca.getPTRS().get(aux[1]);
                     //System.out.println("sp respomdeu: "+ip+"/smaller");
                     System.out.println("SP enviou o IP " + nome);
-                    out.writeUTF(nome);
+                    out.writeUTF(nome+"/ ");
                 }else if(Objects.equals(aux[0],"smaller")) {
                     System.out.println("Sp recebeu uma mensagem a perguntar o ip do SP do subdominio");
                     String ip = ca.getSmallerIp();

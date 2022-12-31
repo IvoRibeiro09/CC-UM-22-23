@@ -46,7 +46,7 @@ public class Cliente {
 
 
     /*
-    String qu1 = "3874,Q+R,0,0,0,0;arroz.robalo.,MX;";
+    String qu1 = "3874,Q+R,0,0,0,0;arroz.robalo.,NS;";
     3874,Q,0,0,0,0;arroz.robalo.,MX;
     3874,Q,0,0,0,0;robalo.,MX;
      */
@@ -57,6 +57,6 @@ public class Cliente {
         Cliente cliente = new Cliente(dsocket,ServerIP,porta);
         cliente.clienteservidor();
     }
-    //3874,Q,0,0,0,0;10.0.16.11,PTR;
+    //3874,Q+R,0,0,0,0;10.0.16.11,PTR;
 
 }

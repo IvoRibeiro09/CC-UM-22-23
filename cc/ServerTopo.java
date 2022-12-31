@@ -50,7 +50,7 @@ public class ServerTopo {
                 //System.out.println("query recebida: "+ query);
                 System.out.println("St recebeu uma query"+query);
                 if(Objects.equals(gettipo(query),"PTR")){
-                    if(iterative(query) == 1)out.writeUTF(ca.getAIps().get("sp.reverse."));
+                    if(iterative(query) == 1)out.writeUTF("iterative!"+ca.getAIps().get("sp.reverse.")+"/reverse");
                     else {
                         Socket s2 = new Socket(ca.getAIps().get("sp.reverse."), 12345);
                         DataInputStream in2 = new DataInputStream(s2.getInputStream());
@@ -126,10 +126,10 @@ public class ServerTopo {
         String[] aux2 = aux[0].split(",");
         for(int i=0;i < aux2[1].length();i++){
             if(aux2[1].charAt(i)=='R'){
-                return 1;
+                return 0;
             }
         }
-        return 0;
+        return 1;
     }
     public String gettipo(String query){
         String[] aux = query.split(";");

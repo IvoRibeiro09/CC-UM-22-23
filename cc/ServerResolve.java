@@ -92,7 +92,9 @@ public class ServerResolve {
             resposta = in.readUTF();
             //System.out.println("recebi a seguinte resposta do sp: "+resposta);
             System.out.println("SP "+this.ServerIps.get("SP")+" respondeu ao SR");
-
+            socket.close();
+            in.close();
+            out.close();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -105,13 +107,18 @@ public class ServerResolve {
             String smaller = "";
             String[] aux = ipaux.split("/");
             IP = aux[0];
+
             if(Objects.equals(aux[1],"smaller "))smaller = "smaller ";
             Socket socket = new Socket(IP,12345);
             DataInputStream in = new DataInputStream(socket.getInputStream());         //leitores
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             //System.out.println("mensagem enviada ao sp "+ IP+": "+smaller+query);
             System.out.println("Mensagem enviada do SR para SP "+IP);
-            out.writeUTF(smaller+query);
+            if(Objects.equals("reverse",aux[1])){
+                smaller = "reverse ";
+                out.writeUTF(smaller+getip(query));
+            }
+            else out.writeUTF(smaller+query);
 
             String rsp = in.readUTF();
             //System.out.println("Resposta do sp "+IP+": "+rsp);
@@ -121,6 +128,9 @@ public class ServerResolve {
             if(Objects.equals(aux2[1],"smaller")) {
                 return SRSP(query,resposta+"/ ");
             }
+            in.close();
+            out.close();
+            socket.close();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -144,7 +154,9 @@ public class ServerResolve {
                 resposta = SRSP(query,aux[1]);
             }
             //System.out.println("recebi a seguinte resposta do st: "+resposta);
-
+            in.close();
+            out.close();
+            socket.close();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -154,6 +166,7 @@ public class ServerResolve {
         while (true) {
             System.out.println("!!!!!!!!!! espera conexão de um cliente !!!!!!!!!!!!!!");
             try {
+                buffer = new byte[5550];
                 DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
                 dsocket.receive(dp);
                 //log QR
@@ -184,6 +197,11 @@ public class ServerResolve {
                 break;
             }
         }
+    }
+    public String getip(String query){
+        String[] aux = query.split(";");
+        String[] aux2 = aux[1].split(",");
+        return aux2[0];
     }
     public int isdomain(String query){
         String[] aux = query.split(";");

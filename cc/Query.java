@@ -109,8 +109,8 @@ public class Query {
             ls.append(getId()).append(",,3,0,0,0;,;");
             return ls.toString();
         }
-        this.Flags = this.Flags.replace("Q+","");
-        this.Flags = this.Flags+"+A";
+        this.Flags = this.Flags.replace("Q","R");
+        this.Flags = this.Flags+"A";
         if (!Objects.equals(ca.getDfault(),this.InfoName)) error2++;
         else {
             for(String tipo : CNAMES.keySet()){
