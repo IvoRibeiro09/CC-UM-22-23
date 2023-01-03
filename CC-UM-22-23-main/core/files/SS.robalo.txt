@@ -1,6 +1,0 @@
-robalo.moc DB files/SS.robalo.moc.db
-robalo.moc SP 10.0.16.11
-robalo.moc DD 127.0.0.1
-robalo.moc LG /var/dns/robalo.moc.log
-all LG /var/dns/all.log
-root ST /var/dns/robalo.moc.db
