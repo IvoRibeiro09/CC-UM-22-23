@@ -1,7 +1,5 @@
 import java.io.*;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -13,8 +11,10 @@ public class ServerS {
     private String lg;
     private String lgall;
     private String st;
+    private DatagramSocket dsocket;
+    private byte[] buffer = new byte[550];
     //construtor inicial
-    public ServerS(){
+    public ServerS(DatagramSocket dsocket){
         this.dominio="";
         this.db = "";
         this.sp = "";
@@ -22,6 +22,7 @@ public class ServerS {
         this.lg = "";
         this.lgall = "";
         this.st = "";
+        this.dsocket = dsocket;
     }
     //seters
     public void setDominio(String s){this.dominio=s;}
@@ -52,8 +53,9 @@ public class ServerS {
         return this.sp;
     }
     public String getDominio(){return this.dominio;}
-    //funçao que le o ficheiro de config do servidor secundario
-    public void ParserSs(String str) throws IOException {
+
+
+    public void ParserSs(String str) throws IOException {  //funçao que le o ficheiro de config do servidor secundario
         Logs log = new Logs();
         try {
             File ficheiro = new File(str);
@@ -70,103 +72,104 @@ public class ServerS {
             }
         }catch (FileNotFoundException e) {
             String[] aux = str.split("\\.");
-            log.addFL(aux[0],"!!!!Erro na leitura do ficheiro de configuraçáo do Servidor Secundario!!!!");
+            log.addFL(aux[0],"!!!!Erro na leitura do ficheiro de configuraçáo do Servidor Secundario!!!!",getDominio());
             e.printStackTrace();
+        }
+    }
+
+    public void clienteservidor(Query q,Cache ca) {
+        Logs log = new Logs();
+        while (true) {
+            System.out.println("!!!!!!!!!! espera conexão de um cliente !!!!!!!!!!!!!!");
+            try {
+                DatagramPacket dp = new DatagramPacket(buffer,buffer.length);
+                dsocket.receive(dp);
+                //log QR
+                InetAddress ClienteIp = dp.getAddress();
+                int porta = dp.getPort();
+                String query = new String(dp.getData(),0,dp.getLength());
+                System.out.println("query recebida: " + query);
+                log.addQR(ClienteIp.getHostName(),query,getDominio());
+
+                String querydone = q.doQuery(query,ca);
+                buffer = querydone.getBytes();
+                dp = new DatagramPacket(buffer,buffer.length,ClienteIp,porta);
+                System.out.println("resposta enviada: "+ querydone);
+                dsocket.send(dp);
+                log.addRP(ClienteIp.getHostName(),querydone,getDominio());
+            }catch (IOException e) {
+                e.printStackTrace();
+                break;
+            }
+        }
+    }
+
+    public void transferenciaZona(Cache ca){
+        Logs log = new Logs();
+        System.out.println("!!!!!!!! iniciei uma transferencia de zona!!!!!!!!!");
+        try{
+            Socket socket = new Socket(this.sp,12346);                   //no ide
+            DataInputStream in = new DataInputStream(socket.getInputStream());         //leitores
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());     //escritor
+
+            //enviar uma mensagem com o proprio dominio
+            String qu1 = "domain: "+ getDominio();
+            out.writeUTF(qu1);
+            System.out.println("perguntei se o sp é do mesmo dominio");
+
+            //envio mensagem a pedir transferencia de zona ao servidor primario
+            int count = in.readInt();
+            System.out.println("recebi o numero de linhas a ser transferido : "+count);
+
+            //confirmaçao do numero de linhas a receber
+            out.writeUTF("ok: " + count);
+            System.out.println("confirmei que estou apto a receber as "+count+" linhas");
+
+            //receber todas as linhas
+            int i = 0;
+            while (i < count) {
+
+                String str = in.readUTF();
+                System.out.println("linha "+(i+1)+": "+str);
+                ca.ParserPorLinha(str, getDominio());
+                i++;
+
+            }
+            socket.close(); //fechar a comunicaçao
+            //fechar leitores e escritores
+            in.close();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+            log.addEZ(dsocket.getInetAddress().getHostName(),getDominio());
         }
     }
 
     public static void main(String[] args) throws IOException {
-        Logs log = new Logs();
-        ServerS servidor = new ServerS();
-        String configfile = "files/SS.robalo.txt";
-        servidor.ParserSs(configfile);
-        log.addEV("config",configfile);//leu o ficheiro de configuração
-        Cache cachess = new Cache();
-        cachess.ParserCacheServer(servidor.getDb());
-        log.addEV("bd",servidor.getDb());//leu o ficheiro de base de dados
-        //conexoes
-        ServerSocket servercliente = new ServerSocket(12346);
-        ServerSocket servers = new ServerSocket(12347);
+        Query q = new Query();
+        Cache ca = new Cache();
 
-        try{
-            System.out.println("comecei uma transferencia de zona");
-            //Socket socket = new Socket("localhost",12345); // no ide
-            Socket socket = new Socket(servidor.getSP(),12345); //no core
-            PrintWriter pr = new PrintWriter((socket.getOutputStream()));
-            String qu1 = "domain: "+servidor.getDominio();
-            pr.println(qu1);
-            pr.flush();
-            System.out.println("perguntei se o sp é do mesmo dominio");
-            //envio mensagem a pedir transferencia de zona ao servidor primario
-            InputStreamReader in = new InputStreamReader(socket.getInputStream());
-            BufferedReader bf = new BufferedReader(in);
-            int count = Integer.parseInt(bf.readLine());
-            System.out.println("recebi o numero de linhas a ser transferido : "+count);
+        DatagramSocket ds = new DatagramSocket(12347);
+        ServerS ss = new ServerS(ds);
+        String configfile = "SP.robalo.txt";
+        ss.ParserSs(configfile);
+        ca.ParserCacheServer(ss.getDb());
 
-            //confirmaçao do numero de linhas a receber
-            PrintWriter pr2 = new PrintWriter(socket.getOutputStream());
-            pr2.println("ok: " + count);
-            pr2.flush();
-            //socket.close();
-            System.out.println("confirmei que estou apto a receber as "+count+" linhas");
-		socket.close();
-            //receber todas as linhas
-		//Socket sockets = servers.accept();
-            int i = 0;
-            while (i < count) {
-                Socket sockets = servers.accept();
+        Thread t1 = new Thread(new ServerS.Mover(ss, 0, ca, q)); //thread responsavel pela conexao com os clientes
+        Thread t2 = new Thread(new ServerS.Mover(ss, 1, ca, q)); //thread responsavel pela conexao com os servidores
 
-                InputStreamReader in2 = new InputStreamReader(sockets.getInputStream());
-                BufferedReader bf2 = new BufferedReader(in2);
-                String str = bf2.readLine();
-		
-                cachess.ParserPorLinha(str, servidor.getDominio()+".");
-                i++;
-               	sockets.close();
-            }
-            //socket.close();
-            System.out.println("servidor secundario recebeu as "+i+" linhas");
-            log.addZT(servidor.getSP(), "SS");
-            System.out.println("espera de mova transferencia de zona!!!!!!!!!!!!!!!!!!");
-        }catch (IOException e){
-            System.out.println("!!!!Erro no servidor secundario!!!!");
-            log.addEZ(servidor.getSP(),"SS");
-            e.printStackTrace();
-        }
-        try {
-            while(true) {
-                System.out.println("espera de conexão de um cliente!!!!!!!!!!!!!!!!!!");
-
-                Socket s = servercliente.accept();
-                InputStreamReader in = new InputStreamReader(s.getInputStream());
-                BufferedReader bf = new BufferedReader(in);
-                String str = bf.readLine();
-                String[] aux = str.split(" ");
-
-                //cliente
-                if (Objects.equals(aux[0], "QE")) {
-                    System.out.println("cliente conectado ao server secundario");
-
-                    System.out.println("mensagem do cliente: " + aux[1]);
-                    log.addQR(s.getInetAddress().getHostName() ,aux[1]);
-
-                    Query q = new Query();
-                    String querydone = q.doQuery(aux[1], cachess);
-                    PrintWriter pr = new PrintWriter(s.getOutputStream());
-                    pr.println(querydone);
-                    log.addRP(s.getInetAddress().getHostName() , querydone);
-                    pr.flush();
-                    System.out.println("mensagem enviada para o cliente: " + querydone);
-                    s.close();
-                }
-            }
-        }catch (Exception e){
-            System.out.println("!!!!Erro no ServidorP!!!!");
-            log.addFL(servidor.getSP(),"comunicação entre cliente e servidor primario");
-            e.printStackTrace();
-        }
-
+        t1.start();t2.start(); //iniciar as threads
     }
+    static class Mover implements Runnable {
+        ServerS ss;
+        int s;
+        Cache ca;
+        Query q;
+        public Mover(ServerS ss, int s,Cache ca ,Query q) { this.ss=ss; this.s=s;this.ca=ca;this.q=q;}
 
-
+        public void run() {
+            if (s == 0) ss.clienteservidor(q,ca);
+            if (s == 1) ss.transferenciaZona(ca);
+        }
+    }
 }

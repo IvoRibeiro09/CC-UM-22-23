@@ -1,54 +1,66 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.net.*;
+import java.util.Scanner;
 
 public class Cliente {
 
-    private String ip;
+    private String domain;
+    private final DatagramSocket dsocket;
+    private final InetAddress ServerIP;
+    private int ServerPorta;
+    private byte[] buffer = new byte[5550];
 
-    public Cliente(){
-        this.ip = "10.0.0.1";
-    }
-    public String getIP(){
-        return ip;
+    public Cliente(DatagramSocket dsocket,InetAddress ServerIP,int porta){
+        this.domain = "bacalhau";
+        this.dsocket = dsocket;
+        this.ServerIP = ServerIP;
+        this.ServerPorta = porta;
     }
 
-    public static void main(String[] args) throws IOException, java.net.UnknownHostException {
-        Cliente cliente = new Cliente();
+    public void clienteservidor(){
         Logs log = new Logs();
-
-        String servernamesp = "10.0.16.11";
-        String servernamess = "10.0.14.10";
-
-        try {
-            //Socket s = new Socket("localhost", 12346);//para o servidor ss no ide
-            //Socket s = new Socket("localhost", 12345);//para o servidor sp no ide
-            Socket s = new Socket(servernamesp, 12345);//para o servidor sp no core
-            //Socket s = new Socket(servernamess, 12346);//para o servidor ss no core
-
-
-            PrintWriter pr = new PrintWriter((s.getOutputStream()));
-            String qu1 = "3874,Q+R,0,0,0,0;robalo.moc.,MX;";
-            pr.println("QE " + qu1);
-            System.out.println("cliente enviou: " + qu1);
-            log.addQE(s.getInetAddress().getHostName(), qu1);
-            pr.flush();
+        while(true){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("digite uma mensagem a enviar para o servidor com IP: " + this.ServerIP);
+            try{
+                String msg = scanner.nextLine();
+                buffer = new byte[5550];
+                buffer = msg.getBytes();
+                DatagramPacket dp = new DatagramPacket(buffer,buffer.length,this.ServerIP, this.ServerPorta);
+                dsocket.send(dp);
+                log.addQE(dsocket.getInetAddress().getHostName(),msg,this.domain);
+                System.out.println("query enviada: "+ msg);
 
 
+                buffer = new byte[5550];
+                dp = new DatagramPacket(buffer,buffer.length,this.ServerIP, this.ServerPorta);
+                dsocket.receive(dp);
 
-            InputStreamReader in = new InputStreamReader(s.getInputStream());
-            BufferedReader bf = new BufferedReader(in);
-            String str = bf.readLine();
-            System.out.println("cliente recebeu: " + str);
-            log.addRR(s.getInetAddress().getHostName(), str);
+                String resposta = new String(dp.getData(),0, dp.getLength());
+                String[] aux = resposta.split("/");
+                log.addRR(dsocket.getInetAddress().getHostName(),aux[0],this.domain);
+                System.out.println("resposta recebida: " + aux[0]);
 
-        }catch (IOException e){
-            log.addFL(cliente.getIP(), "!!!!Erro no cliente ao conector ao Servidor!!!!");
-            e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace();
+                break;
+            }
         }
-
     }
+
+
+    /*
+    String qu1 = "3874,Q+R,0,0,0,0;arroz.robalo.,NS;";
+    3874,Q,0,0,0,0;arroz.robalo.,MX;
+    3874,Q,0,0,0,0;robalo.,MX;
+     */
+    public static void main(String[] args) throws UnknownHostException, SocketException {
+        DatagramSocket dsocket = new DatagramSocket();
+        InetAddress ServerIP = InetAddress.getByName(args[0]);
+        int porta = 54321;
+        Cliente cliente = new Cliente(dsocket,ServerIP,porta);
+        cliente.clienteservidor();
+    }
+    //3874,Q+R,0,0,0,0;10.0.16.11,PTR;
+
 }
