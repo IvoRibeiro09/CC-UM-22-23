@@ -4,10 +4,6 @@ node n1 {
     network-config {
 	hostname Router1
 	!
-	interface eth5
-	 ip address 10.0.29.1/24
-	 ipv6 address 2001:29::1/64
-	!
 	interface eth4
 	 ip address 10.0.22.1/24
 	 ipv6 address 2001:22::1/64
@@ -38,7 +34,6 @@ node n1 {
     services {OSPFv2 OSPFv3 zebra IPForward}
     interface-peer {eth2 n39}
     interface-peer {eth4 n40}
-    interface-peer {eth5 n59}
 }
 
 node n2 {
@@ -557,8 +552,8 @@ node n24 {
 	!
     }
     canvas c1
-    iconcoords {395.0 62.0}
-    labelcoords {361.0 86.0}
+    iconcoords {408.0 66.0}
+    labelcoords {374.0 90.0}
     interface-peer {eth0 n51}
 }
 
@@ -895,8 +890,8 @@ node n51 {
 	!
     }
     canvas c1
-    iconcoords {399.0 122.0}
-    labelcoords {399.0 146.0}
+    iconcoords {523.0 108.0}
+    labelcoords {523.0 132.0}
     interface-peer {e0 n7}
     interface-peer {e1 n24}
 }
@@ -1109,36 +1104,6 @@ node n57 {
     iconcoords {755.0 468.0}
     labelcoords {755.0 500.0}
     interface-peer {eth0 n53}
-}
-
-node n58 {
-    type router
-    model host
-    network-config {
-	hostname SP0
-	!
-	interface eth0
-	 ip address 10.0.29.10/24
-	 ipv6 address 2001:29::10/64
-	!
-    }
-    canvas c1
-    iconcoords {518.0 69.0}
-    labelcoords {518.0 101.0}
-    interface-peer {eth0 n59}
-}
-
-node n59 {
-    type lanswitch
-    network-config {
-	hostname n59
-	!
-    }
-    canvas c1
-    iconcoords {593.0 117.0}
-    labelcoords {593.0 141.0}
-    interface-peer {e0 n1}
-    interface-peer {e1 n58}
 }
 
 link l1 {
@@ -1451,16 +1416,6 @@ link l29 {
     bandwidth 0
 }
 
-link l63 {
-    nodes {n1 n59}
-    bandwidth 0
-}
-
-link l64 {
-    nodes {n59 n58}
-    bandwidth 0
-}
-
 annotation a1 {
     iconcoords {205 136 782 553}
     type oval
@@ -1709,20 +1664,6 @@ annotation a26 {
     labelcolor #ffffff
     fontfamily {Arial}
     fontsize {20}
-    canvas c1
-}
-
-annotation a27 {
-    iconcoords {481.0 11.0 629.0 152.0}
-    type rectangle
-    label {.addr.reverse}
-    labelcolor black
-    fontfamily {Arial}
-    fontsize 12
-    color #c0a8ff
-    width 0
-    border black
-    rad 25
     canvas c1
 }
 
